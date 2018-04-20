@@ -9,9 +9,6 @@ import FeatureTable from '@boundlessgeo/sdk/components/FeatureTable';
 import Measure from '@boundlessgeo/sdk/components/Measure';
 import LoadingPanel from '@boundlessgeo/sdk/components/LoadingPanel';
 import MapPanel from '@boundlessgeo/sdk/components/MapPanel';
-import MapConfig from '@boundlessgeo/sdk/components/MapConfig';
-import Select from '@boundlessgeo/sdk/components/Select';
-import DrawFeature from '@boundlessgeo/sdk/components/DrawFeature';
 import LeftNav from '@boundlessgeo/sdk/components/LeftNav';
 import Geolocation from '@boundlessgeo/sdk/components/Geolocation';
 import Zoom from '@boundlessgeo/sdk/components/Zoom';
@@ -21,7 +18,6 @@ import InfoPopup from '@boundlessgeo/sdk/components/InfoPopup';
 import EditPopup from '@boundlessgeo/sdk/components/EditPopup';
 import Globe from '@boundlessgeo/sdk/components/Globe';
 import Legend from '@boundlessgeo/sdk/components/Legend';
-import Login from '@boundlessgeo/sdk/components/Login';
 import Header from '@boundlessgeo/sdk/components/Header';
 import {Tab} from 'material-ui/Tabs';
 import FlatButton from 'material-ui/FlatButton';
@@ -95,8 +91,8 @@ var map = new ol.Map({
   ],
   controls: [new ol.control.Attribution({collapsible: false}), new ol.control.ScaleLine()],
   view: new ol.View({
-    center: [0, 0],
-    zoom: 2
+    center: ol.proj.fromLonLat([-97.41, 20]),
+    zoom: 5
   })
 });
 
@@ -189,24 +185,20 @@ class Mapa extends React.Component {
     var leftNavWidth = 360;
     var header = (
       <Header
-        title='Boundless SDK Mapa'
-        logo='boundless_icon_256x256.png'
+        title='Soy el MAPA'
+        style={{ 'z-index': 0, }}
+        logo='https://i.pinimg.com/originals/e4/60/21/e460219e1373594626d48bcf955d871d.png'
         showLeftIcon={!this.state.leftNavOpen}
-        style={{left: this.state.leftNavOpen ? leftNavWidth : 0, width: this.state.leftNavOpen ? 'calc(100% - ' + leftNavWidth + 'px)' : '100%'}}
         onLeftIconTouchTap={this.leftNavOpen.bind(this)}>
         <Measure toggleGroup='navigation' map={map}/>
-        <Select toggleGroup='navigation' map={map}/>
-        <Login />
         <Navigation toggleGroup='navigation' secondary={true} />
-        <DrawFeature toggleGroup='navigation' map={map} />
-        <MapConfig map={map}/>
       </Header>);
     return (
         <div id='content'>
           <LeftNav width={leftNavWidth} tabList={tabList} open={this.state.leftNavOpen} onRequestClose={this.leftNavClose.bind(this)}/>
           <div>
             {header}
-            <div className='map' style={{left: this.state.leftNavOpen ? leftNavWidth : 0, width: this.state.leftNavOpen ? 'calc(100% - ' + leftNavWidth + 'px)' : '100%'}}>
+            <div className='mapClass'>
               <MapPanel id='map' map={map} />
               <LoadingPanel map={map} />
               <div id='globe-button'><Globe map={map} /></div>

@@ -1,31 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <base target="_blank">
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1" >
   <title>Soy el Mapa de los Datos Abiertos</title>
   <link rel="stylesheet" href="node_modules/@boundlessgeo/sdk/dist/css/components.css">
   <link rel="stylesheet" type="text/css" href="app.css">
+  <!-- webcomponents y polymer -->
+  <script type="text/javascript" src="https://cdn.datos.gob.mx/bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+  <link rel="import" href="https://cdn.datos.gob.mx/bower_components/polymer/polymer.html">
+  <!-- navbar y footer de DGM -->
+  <link rel="import" href="https://cdn.datos.gob.mx/bower_components/dgm-navbar/dgm-navbar.html">
+  <link rel="import" href="https://cdn.datos.gob.mx/bower_components/dgm-footer/dgm-footer.html">
+  <!-- CSS -->
+  <link rel="shortcut icon" href="https://cdn.datos.gob.mx/assets/img/favicon.ico">
+  <link rel="stylesheet" href="https://cdn.datos.gob.mx/assets/css/main.css">
+
   <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en,Object.assign,Array.prototype.find"></script>
-  <script src="./resources/ol3-cesium/Cesium.js" type="text/javascript" charset="utf-8"></script>
+  <script src="resources/ol3-cesium" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
+  <dgm-navbar></dgm-navbar>
   <div id='main'></div>
-  <!-- This script adds the Roboto font to our project. For more detail go to this site:  http://www.google.com/fonts#UsePlace:use/Collection:Roboto:400,300,500 -->
-  <script>
-    var WebFontConfig = {
-      google: { families: [ 'Roboto:400,300,500:latin' ] }
-    };
-    (function() {
-      var wf = document.createElement('script');
-      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-      wf.type = 'text/javascript';
-      wf.async = 'true';
-      var s = document.getElementsByTagName('script')[0];
-      s.parentNode.insertBefore(wf, s);
-    })();
-  </script>
+  <dgm-footer></dgm-footer>
   <script src="/loader.js"></script>
   <script src="/build/app-debug.js"></script>
 </body>
