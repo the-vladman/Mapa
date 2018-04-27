@@ -91,7 +91,8 @@ var map = new ol.Map({
   ],
   controls: [new ol.control.Attribution({collapsible: false}), new ol.control.ScaleLine()],
   view: new ol.View({
-    center: ol.proj.fromLonLat([-97.41, 20]),
+    projection: "EPSG:4326",
+    center: [-101.9563, 23.6257],
     zoom: 5
   })
 });
