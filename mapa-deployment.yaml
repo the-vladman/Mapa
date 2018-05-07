@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mapa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mapa
+  template:
+    metadata:
+      labels:
+        app: mapa
+    spec:
+      containers:
+        - name: mapa-front
+          image: vladman/mapa:v0.0.1
+          ports:
+            - containerPort: 3000
+          env:
+            - name: GEOSERVER_URL
+              value: "https://geo.datos.gob.mx/geoserver/wms"
