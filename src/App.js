@@ -11,14 +11,12 @@ import Geolocation from '@boundlessgeo/sdk/components/Geolocation';
 import Header from '@boundlessgeo/sdk/components/Header';
 import Zoom from '@boundlessgeo/sdk/components/Zoom';
 import Rotate from '@boundlessgeo/sdk/components/Rotate';
-import LeftNav from '@boundlessgeo/sdk/components/LeftNav';
 import Measure from '@boundlessgeo/sdk/components/Measure';
-import { Tab } from 'material-ui/Tabs';
-import FlatButton from 'material-ui/FlatButton';
-import LayerList from '@boundlessgeo/sdk/components/LayerList';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import AddLayerModal from '@boundlessgeo/sdk/components/AddLayerModal';
 import Navigation from '@boundlessgeo/sdk/components/Navigation';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import { defineMessages, injectIntl, intlShape } from 'react-intl';
+import { injectIntl, intlShape } from 'react-intl';
 // Needed for onTouchTap
 // Can go away when react 1.0 release
 // Check this repo:
@@ -47,19 +45,11 @@ var map = new ol.Map({
   })
 });
 
-const messages = defineMessages({
-  layerstab: {
-    id: 'mapa.layerstab',
-    description: 'Title of the layers tab',
-    defaultMessage: 'Layers'
-  }
-});
-
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      leftNavOpen: false
+      layerModalOpen: false
     };
   }
 
@@ -69,75 +59,40 @@ class App extends Component {
     };
   }
 
-  layerListOpen(value) {
+  openAddLayerModal(value){
     this.setState({
-      addLayerOpen: true
-    });
-  }
-  layerListClose(value) {
-    this.setState({
-      addLayerOpen: false
-    });
-  }
-  leftNavOpen(value) {
-    this.setState({
-      leftNavOpen: true
+      layerModalOpen: true
     }, function () {
-      map.updateSize();
-    });
-  }
-  leftNavClose(value) {
+      console.log('abiero');
+  });
+}
+  closeAddLayerModal(value) {
     this.setState({
-      leftNavOpen: false
+      layerModalOpen: false
     }, function () {
-      map.updateSize();
+      console.log('cerrado');
     });
   }
+
+
 
   
 
   render() {
-    const { formatMessage } = this.props.intl;
-    const tabList = [
-      <Tab
-        disableTouchRipple={true}
-        key={1}
-        value={1}
-        onActive={this.layerListOpen.bind(this)}
-        label={formatMessage(messages.layerstab)}>
-        <div id='layerlist'>
-          <LayerList
-            inlineDialogs={true}
-            allowStyling={true}
-            expandOnHover={false}
-            icon={<FlatButton label="Add New Layer" />}
-            showOnStart={true}
-            addLayer={{ open: this.state.addLayerOpen, onRequestClose: this.layerListClose.bind(this), allowUserInput: true, sources: [{ url: 'http://10.20.55.7:8000/geoserver/wms', type: 'WMS', title: 'Datos Mx QA' }] }}
-            allowFiltering={true}
-            showOpacity={true}
-            showDownload={true}
-            showGroupContent={true}
-            showZoomTo={true}
-            allowReordering={true}
-            map={map} />
-        </div>
-      </Tab>];
-
-    var leftNavWidth = 500;
     var header = (
       <Header
         title='Soy el MAPA'
         style={{ 'z-index': 0, }}
         logo='https://i.pinimg.com/originals/e4/60/21/e460219e1373594626d48bcf955d871d.png'
-        showLeftIcon={!this.state.leftNavOpen}
-        onLeftIconTouchTap={this.leftNavOpen.bind(this)}>
+        showLeftIcon={!this.state.layerModalOpen}
+        onLeftIconTouchTap={this.openAddLayerModal.bind(this)}>
         <Measure toggleGroup='navigation' map={map} />
         <Navigation toggleGroup='navigation' secondary={true} />
       </Header>);
       
     return (
       <div>
-        <LeftNav width={leftNavWidth} tabList={tabList} open={this.state.leftNavOpen} onRequestClose={this.leftNavClose.bind(this)} />
+        <AddLayerModal map={map} allowCreate={false} allowUpload={false} open={this.state.layerModalOpen} onRequestClose={this.closeAddLayerModal.bind(this)} sources={[{ url: 'https://geo.datos.gob.mx/geoserver/wms', type: 'WMS', title: 'Datos MX QA' }]} />
         <div>
           {header}
           <div className="App">
@@ -149,6 +104,7 @@ class App extends Component {
               <div id='control-button'><HomeButton map={map} /></div>
               <div id='control-button'><Zoom map={map} /></div>
               <div id='control-button'><Rotate map={map} /></div>
+              <div id='control-button'><FloatingActionButton onClick={this.openAddLayerModal.bind(this)} /></div>
             </div>
           </div>
         </div>
