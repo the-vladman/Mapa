@@ -1,0 +1,11 @@
+#control-buttons{
+    position: relative;
+    left: 50px;
+    bottom: 600px;
+    width: 500px;
+}
+
+#control-button{
+    margin-top: 3pt;
+
+}
