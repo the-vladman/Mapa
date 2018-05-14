@@ -1,5 +1,5 @@
-# Stage 1 - the build process
-FROM node:9.6.1 as builder
+# base image
+FROM node:9.6.1
 
 # set working directory
 RUN mkdir /usr/src/app
@@ -15,10 +15,7 @@ RUN yarn
 
 COPY . /usr/src/app
 
-RUN yarn build
+EXPOSE 3000
 
-# Stage 2 - the production environment
-FROM nginx:1.12-alpine
-COPY --from=builder /usr/src/app/build /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# start app
+CMD [ "yarn", "start" ]
