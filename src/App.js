@@ -3,6 +3,8 @@ import './App.css';
 import ol from 'openlayers';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import CustomTheme from './theme';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 import LoadingPanel from '@boundlessgeo/sdk/components/LoadingPanel';
 import MapPanel from '@boundlessgeo/sdk/components/MapPanel';
 import Globe from '@boundlessgeo/sdk/components/Globe';
@@ -12,7 +14,6 @@ import Header from '@boundlessgeo/sdk/components/Header';
 import Zoom from '@boundlessgeo/sdk/components/Zoom';
 import Rotate from '@boundlessgeo/sdk/components/Rotate';
 import Measure from '@boundlessgeo/sdk/components/Measure';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
 import AddLayerModal from '@boundlessgeo/sdk/components/AddLayerModal';
 import Navigation from '@boundlessgeo/sdk/components/Navigation';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -104,7 +105,7 @@ class App extends Component {
               <div id='control-button'><HomeButton map={map} /></div>
               <div id='control-button'><Zoom map={map} /></div>
               <div id='control-button'><Rotate map={map} /></div>
-              <div id='control-button'><FloatingActionButton onClick={this.openAddLayerModal.bind(this)} /></div>
+              <div id='control-button'><FloatingActionButton mini={true} onClick={this.openAddLayerModal.bind(this)}><ContentAdd /></FloatingActionButton></div>
             </div>
           </div>
         </div>
