@@ -5,6 +5,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import CustomTheme from './theme';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import AppBar from 'material-ui/AppBar';
 import LoadingPanel from '@boundlessgeo/sdk/components/LoadingPanel';
 import MapPanel from '@boundlessgeo/sdk/components/MapPanel';
 import Globe from '@boundlessgeo/sdk/components/Globe';
@@ -74,33 +75,29 @@ class App extends Component {
       console.log('cerrado');
     });
   }
-
-
-
   
-
   render() {
-    var header = (
-      <Header
-        title='Soy el MAPA'
-        style={{ 'z-index': 0, }}
-        logo='https://i.pinimg.com/originals/e4/60/21/e460219e1373594626d48bcf955d871d.png'
-        showLeftIcon={!this.state.layerModalOpen}
-        onLeftIconTouchTap={this.openAddLayerModal.bind(this)}>
-        <Measure toggleGroup='navigation' map={map} />
-        <Navigation toggleGroup='navigation' secondary={true} />
-      </Header>);
+    var appBar = (
+      <AppBar
+        iconElementLeft={
+          <div>
+            <Navigation toggleGroup='navigation' secondary={true} />
+            <Measure toggleGroup='navigation' map={map} />
+          </div>
+          }
+      />
+    );
       
     return (
       <div>
         <AddLayerModal map={map} allowCreate={false} allowUpload={false} open={this.state.layerModalOpen} onRequestClose={this.closeAddLayerModal.bind(this)} sources={[{ url: 'https://geo.datos.gob.mx/geoserver/wms', type: 'WMS', title: 'Datos MX QA' }]} />
         <div>
-          {header}
+          {appBar}
           <div className="App">
             <MapPanel map={map} />
             <LoadingPanel map={map} />
             <div id='control-buttons'>
-              <div id='control-button'><Globe map={map} /></div>
+              {/* <div id='control-button'><Globe map={map} /></div> */}
               <div id='control-button'><Geolocation map={map} /></div>
               <div id='control-button'><HomeButton map={map} /></div>
               <div id='control-button'><Zoom map={map} /></div>
