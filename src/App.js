@@ -6,6 +6,7 @@ import CustomTheme from './theme';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import AppBar from 'material-ui/AppBar';
+import MapaAppBar from './components/MapaAppBar';
 import LoadingPanel from '@boundlessgeo/sdk/components/LoadingPanel';
 import MapPanel from '@boundlessgeo/sdk/components/MapPanel';
 import Globe from '@boundlessgeo/sdk/components/Globe';
@@ -75,7 +76,7 @@ class App extends Component {
       console.log('cerrado');
     });
   }
-  
+
   render() {
     var appBar = (
       <AppBar
@@ -92,7 +93,7 @@ class App extends Component {
       <div>
         <AddLayerModal map={map} allowCreate={false} allowUpload={false} open={this.state.layerModalOpen} onRequestClose={this.closeAddLayerModal.bind(this)} sources={[{ url: 'https://geo.datos.gob.mx/geoserver/wms', type: 'WMS', title: 'Datos MX QA' }]} />
         <div>
-          {appBar}
+          <MapaAppBar/>
           <div className="App">
             <MapPanel map={map} />
             <LoadingPanel map={map} />
