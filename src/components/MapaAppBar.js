@@ -10,11 +10,11 @@ class MapaAppBar extends Component {
             iconElementLeft={
                 <div>
                     <Navigation toggleGroup='navigation' secondary={true} />
-                    {/* <Measure toggleGroup='navigation' map={map} /> */}
+                        <Measure toggleGroup='navigation' map={this.props.mapa} />
                 </div>
             }/>
         );
     }
 }
 
-export default MapaAppBar; // Don’t forget to use export default!
+export default MapaAppBar;

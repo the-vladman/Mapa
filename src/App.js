@@ -5,7 +5,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import CustomTheme from './theme';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import AppBar from 'material-ui/AppBar';
 import MapaAppBar from './components/MapaAppBar';
 import LoadingPanel from '@boundlessgeo/sdk/components/LoadingPanel';
 import MapPanel from '@boundlessgeo/sdk/components/MapPanel';
@@ -15,9 +14,7 @@ import Geolocation from '@boundlessgeo/sdk/components/Geolocation';
 import Header from '@boundlessgeo/sdk/components/Header';
 import Zoom from '@boundlessgeo/sdk/components/Zoom';
 import Rotate from '@boundlessgeo/sdk/components/Rotate';
-import Measure from '@boundlessgeo/sdk/components/Measure';
 import AddLayerModal from '@boundlessgeo/sdk/components/AddLayerModal';
-import Navigation from '@boundlessgeo/sdk/components/Navigation';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { injectIntl, intlShape } from 'react-intl';
 // Needed for onTouchTap
@@ -78,22 +75,11 @@ class App extends Component {
   }
 
   render() {
-    var appBar = (
-      <AppBar
-        iconElementLeft={
-          <div>
-            <Navigation toggleGroup='navigation' secondary={true} />
-            <Measure toggleGroup='navigation' map={map} />
-          </div>
-          }
-      />
-    );
-      
     return (
       <div>
         <AddLayerModal map={map} allowCreate={false} allowUpload={false} open={this.state.layerModalOpen} onRequestClose={this.closeAddLayerModal.bind(this)} sources={[{ url: 'https://geo.datos.gob.mx/geoserver/wms', type: 'WMS', title: 'Datos MX QA' }]} />
         <div>
-          <MapaAppBar/>
+          <MapaAppBar mapa={map}/>
           <div className="App">
             <MapPanel map={map} />
             <LoadingPanel map={map} />
