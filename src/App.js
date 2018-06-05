@@ -5,7 +5,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import CustomTheme from './theme';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import MapaAppBar from './components/MapaAppBar';
 import LoadingPanel from '@boundlessgeo/sdk/components/LoadingPanel';
 import MapPanel from '@boundlessgeo/sdk/components/MapPanel';
 import Globe from '@boundlessgeo/sdk/components/Globe';
@@ -15,6 +14,10 @@ import Header from '@boundlessgeo/sdk/components/Header';
 import Zoom from '@boundlessgeo/sdk/components/Zoom';
 import Rotate from '@boundlessgeo/sdk/components/Rotate';
 import AddLayerModal from '@boundlessgeo/sdk/components/AddLayerModal';
+///// my Components
+import MapaAppBar from './components/MapaAppBar';
+import MapaAddLayersModal from './components/MapaAddLayersModal';
+///// my Components
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { injectIntl, intlShape } from 'react-intl';
 // Needed for onTouchTap
@@ -77,6 +80,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        {/* <MapaAddLayersModal isOpen={this.state.layerModalOpen} closeModal={this.closeAddLayerModal.bind(this)}/> */}
         <AddLayerModal map={map} allowCreate={false} allowUpload={false} open={this.state.layerModalOpen} onRequestClose={this.closeAddLayerModal.bind(this)} sources={[{ url: 'https://geo.datos.gob.mx/geoserver/wms', type: 'WMS', title: 'Datos MX QA' }]} />
         <div>
           <MapaAppBar mapa={map}/>
