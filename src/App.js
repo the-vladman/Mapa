@@ -80,8 +80,8 @@ class App extends Component {
   render() {
     return (
       <div>
-        {/* <MapaAddLayersModal isOpen={this.state.layerModalOpen} closeModal={this.closeAddLayerModal.bind(this)}/> */}
-        <AddLayerModal map={map} allowCreate={false} allowUpload={false} open={this.state.layerModalOpen} onRequestClose={this.closeAddLayerModal.bind(this)} sources={[{ url: 'https://geo.datos.gob.mx/geoserver/wms', type: 'WMS', title: 'Datos MX QA' }]} />
+        <MapaAddLayersModal isOpen={this.state.layerModalOpen} closeModal={this.closeAddLayerModal.bind(this)}/>
+        {/* <AddLayerModal map={map} allowCreate={false} allowUpload={false} open={this.state.layerModalOpen} onRequestClose={this.closeAddLayerModal.bind(this)} sources={[{ url: 'https://geo.datos.gob.mx/geoserver/wms', type: 'WMS', title: 'Datos MX QA' }]} /> */}
         <div>
           <MapaAppBar mapa={map}/>
           <div className="App">
