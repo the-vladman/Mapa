@@ -3,7 +3,7 @@ import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
-
+import './MapaAddLayersModal.css';
 
 class MapaAddLayersModal extends Component {
     constructor(props) {
