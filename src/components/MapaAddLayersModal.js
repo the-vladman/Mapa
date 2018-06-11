@@ -11,7 +11,8 @@ class MapaAddLayersModal extends Component {
         this.state = {
             isLoaded: false,
             error: null,
-            layers: []
+            layers: [],
+            layersSelected: []
         };
     }
 
@@ -35,6 +36,11 @@ class MapaAddLayersModal extends Component {
                     });
                 }
             )
+    }
+    selectedLayer(layer) {
+        this.setState({ layersSelected: [...this.state.layersSelected, layer]})
+        console.log(this.state.layersSelected);
+        
     }
 
     render() {
@@ -74,7 +80,19 @@ class MapaAddLayersModal extends Component {
                     >
                     {
                         layers.map(layer => (
-                                    <Paper style={style} zDepth={1}> {layer.name_resource} {layer.ckan} </Paper>
+                                <div className='resource-item' onClick={this.selectedLayer.bind(this, layer)}>
+                                        <div className='resource-item-icon'><span className="tag-icon tag-desarrollo"></span></div>
+                                        <div className='resource-item-name'>{layer.name_resource ? layer.name_resource : layer.geoserver}</div>
+                                        <div className='resource-item-org'>
+                                            {
+                                                layer.organization ?
+                                                (<strong>
+                                                    <a href={ 'http://10.20.55.7/busca/organization/'+ layer.organization.name}>{layer.organization ? layer.organization.title : ''}</a>
+                                                </strong>):
+                                                (<strong></strong>)
+                                            }
+                                        </div>
+                                    </div>
                         ))
                     }
                     </Dialog>
