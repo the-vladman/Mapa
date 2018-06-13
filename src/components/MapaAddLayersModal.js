@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
-import Paper from 'material-ui/Paper';
 import './MapaAddLayersModal.css';
+import ol from 'openlayers';
 
 class MapaAddLayersModal extends Component {
     constructor(props) {
@@ -37,6 +37,20 @@ class MapaAddLayersModal extends Component {
                 }
             )
     }
+
+    createLayer(layer){
+        var newWmsLayer = new ol.layer.Tile({
+            title: layer.name_resource,
+            source: new ol.source.TileWMS({
+            url: 'http://geo.datos.gob.mx/geoserver/ows',
+            params: {'LAYERS': "ckan:" + layer.geoserver, 'TILED': true},
+            serverType: 'geoserver'
+            })
+        });
+
+        return newWmsLayer;
+    }
+
     selectedLayer(layer) {
         this.setState({ layersSelected: [...this.state.layersSelected, layer]})
         console.log(this.state.layersSelected);
