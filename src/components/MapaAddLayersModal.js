@@ -52,9 +52,9 @@ class MapaAddLayersModal extends Component {
     }
 
     selectedLayer(layer) {
-        this.setState({ layersSelected: [...this.state.layersSelected, layer]})
-        console.log(this.state.layersSelected);
-        
+        const newLayer = this.createLayer(layer);
+        this.props.mapa.addLayer(newLayer);
+        this.props.closeModal();
     }
 
     render() {
