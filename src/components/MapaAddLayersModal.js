@@ -56,14 +56,6 @@ class MapaAddLayersModal extends Component {
             />,
         ];
 
-        const style = {
-            height: 50,
-            width: 700,
-            margin: 10,
-            textAlign: 'center',
-            display: 'inline-block',
-        };
-
         if (error) {
             return <div>Error: {error.message}</div>;
         } else if (!isLoaded) {
