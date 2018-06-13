@@ -14,6 +14,7 @@ import Header from '@boundlessgeo/sdk/components/Header';
 import Zoom from '@boundlessgeo/sdk/components/Zoom';
 import Rotate from '@boundlessgeo/sdk/components/Rotate';
 import AddLayerModal from '@boundlessgeo/sdk/components/AddLayerModal';
+import LayerList from '@boundlessgeo/sdk/components/LayerList';
 ///// my Components
 import MapaAppBar from './components/MapaAppBar';
 import MapaAddLayersModal from './components/MapaAddLayersModal';
@@ -87,17 +88,20 @@ class App extends Component {
           <div className="App">
             <MapPanel map={map} />
             <LoadingPanel map={map} />
-            <div id='control-buttons'>
+            <div id='left-control-buttons'>
+              <div id='control-button'><FloatingActionButton mini={true} onClick={this.openAddLayerModal.bind(this)}><ContentAdd /></FloatingActionButton></div>
+              <div id='control-button'><LayerList allowFiltering={true} showOpacity={true} showDownload={true} showGroupContent={true} showZoomTo={true} allowReordering={true} map={map} /></div>
+            </div>
+            <div id='right-control-buttons'>
               {/* <div id='control-button'><Globe map={map} /></div> */}
               <div id='control-button'><Geolocation map={map} /></div>
               <div id='control-button'><HomeButton map={map} /></div>
               <div id='control-button'><Zoom map={map} /></div>
               <div id='control-button'><Rotate map={map} /></div>
-              <div id='control-button'><FloatingActionButton mini={true} onClick={this.openAddLayerModal.bind(this)}><ContentAdd /></FloatingActionButton></div>
             </div>
           </div>
         </div>
-      </div>   
+      </div>
     );
   }
 }
