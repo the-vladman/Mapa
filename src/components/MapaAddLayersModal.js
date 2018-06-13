@@ -17,7 +17,7 @@ class MapaAddLayersModal extends Component {
     }
 
     componentDidMount() {
-        fetch('http://10.20.55.7/v2/api/buda/ckan-geoserver')
+        fetch(process.env.REACT_APP_API_URL + '/ckan-geoserver')
             .then(res => res.json())
             .then(
                 (response) => {
@@ -42,7 +42,7 @@ class MapaAddLayersModal extends Component {
         var newWmsLayer = new ol.layer.Tile({
             title: layer.name_resource,
             source: new ol.source.TileWMS({
-            url: 'http://geo.datos.gob.mx/geoserver/ows',
+            url: process.env.REACT_APP_GEOSERVER_URL + '/ows',
             params: {'LAYERS': "ckan:" + layer.geoserver, 'TILED': true},
             serverType: 'geoserver'
             })
@@ -92,7 +92,7 @@ class MapaAddLayersModal extends Component {
                                         {
                                             layer.organization ?
                                             (<strong>
-                                                <a href={ 'http://10.20.55.7/busca/organization/'+ layer.organization.name}>{layer.organization ? layer.organization.title : ''}</a>
+                                                <a href={ process.env.REACT_APP_CKAN_URL + '/busca/organization/'+ layer.organization.name}>{layer.organization ? layer.organization.title : ''}</a>
                                             </strong>):
                                             (<strong></strong>)
                                         }
