@@ -80,26 +80,24 @@ class MapaAddLayersModal extends Component {
                     <Dialog
                         title="Agregar Capas"
                         open={this.props.isOpen}
-                        actions={actions}
                         onRequestClose={this.props.closeModal}
                         autoScrollBodyContent={true}
                     >
                     {
                         layers.map(layer => (
-                                <div className='resource-item' onClick={this.selectedLayer.bind(this, layer)}>
-                                        <div className='resource-item-icon'><span className="tag-icon tag-desarrollo"></span></div>
-                                        <div className='resource-item-name'>{layer.name_resource ? layer.name_resource : layer.geoserver}</div>
-                                        <div className='resource-item-org'>
-                                            {
-                                                layer.organization ?
-                                                (<strong>
-                                                    <a href={ 'http://10.20.55.7/busca/organization/'+ layer.organization.name}>{layer.organization ? layer.organization.title : ''}</a>
-                                                </strong>):
-                                                (<strong></strong>)
-                                            }
-                                        </div>
+                                <div key={layer._id} className='resource-item' onClick={this.selectedLayer.bind(this, layer)}>
+                                    <div className='resource-item-icon'><span className="tag-icon tag-desarrollo"></span></div>
+                                    <div className='resource-item-name'>{layer.name_resource ? layer.name_resource : layer.geoserver}</div>
+                                    <div className='resource-item-org'>
+                                        {
+                                            layer.organization ?
+                                            (<strong>
+                                                <a href={ 'http://10.20.55.7/busca/organization/'+ layer.organization.name}>{layer.organization ? layer.organization.title : ''}</a>
+                                            </strong>):
+                                            (<strong></strong>)
+                                        }
                                     </div>
-                        ))
+                                </div>))
                     }
                     </Dialog>
                 </div>
