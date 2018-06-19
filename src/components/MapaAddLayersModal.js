@@ -4,6 +4,11 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import './MapaAddLayersModal.css';
 import ol from 'openlayers';
+import LinearProgress from 'material-ui/LinearProgress';
+import TextField from 'material-ui/TextField';
+import IconButton from 'material-ui/IconButton';
+import SearchIcon from 'material-ui/svg-icons/action/search';
+
 
 class MapaAddLayersModal extends Component {
     constructor(props) {
@@ -16,8 +21,8 @@ class MapaAddLayersModal extends Component {
         };
     }
 
-    componentDidMount() {
-        fetch(process.env.REACT_APP_API_URL + '/ckan-geoserver')
+    componentWillMount() {
+        fetch(process.env.REACT_APP_API_URL + '/ckan-geoserver' + '?pageSize=500')
             .then(res => res.json())
             .then(
                 (response) => {
@@ -57,6 +62,12 @@ class MapaAddLayersModal extends Component {
         this.props.closeModal();
     }
 
+
+    addLayers(){
+
+    }
+
+
     render() {
         const { error, isLoaded, layers } = this.state;
         const actions = [
@@ -73,7 +84,7 @@ class MapaAddLayersModal extends Component {
         if (error) {
             return <div>Error: {error.message}</div>;
         } else if (!isLoaded) {
-            return <div>Loading...</div>;
+            return < LinearProgress mode = "indeterminate" />;
         } else {
             return (
                 <div>
@@ -83,6 +94,7 @@ class MapaAddLayersModal extends Component {
                         onRequestClose={this.props.closeModal}
                         autoScrollBodyContent={true}
                     >
+                        <TextField fullWidth={true} hintText="Buscar" /><IconButton><SearchIcon/></IconButton>
                     {
                         layers.map(layer => (
                                 <div key={layer._id} className='resource-item' onClick={this.selectedLayer.bind(this, layer)}>

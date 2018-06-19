@@ -15,6 +15,8 @@ import Zoom from '@boundlessgeo/sdk/components/Zoom';
 import Rotate from '@boundlessgeo/sdk/components/Rotate';
 import AddLayerModal from '@boundlessgeo/sdk/components/AddLayerModal';
 import LayerList from '@boundlessgeo/sdk/components/LayerList';
+import Measure from '@boundlessgeo/sdk/components/Measure';
+import Navigation from '@boundlessgeo/sdk/components/Navigation';
 ///// my Components
 import MapaAppBar from './components/MapaAppBar';
 import MapaAddLayersModal from './components/MapaAddLayersModal';
@@ -44,8 +46,8 @@ var map = new ol.Map({
   controls: [new ol.control.Attribution({ collapsible: false }), new ol.control.ScaleLine()],
   view: new ol.View({
     projection: "EPSG:4326",
-    center: [-101.9563, 18.6257],
-    zoom: 5.5
+    center: [-101.9563, 23.6257],
+    zoom: 6
   })
 });
 
@@ -84,13 +86,13 @@ class App extends Component {
         <MapaAddLayersModal mapa={map} isOpen={this.state.layerModalOpen} closeModal={this.closeAddLayerModal.bind(this)}/>
         {/* <AddLayerModal map={map} allowCreate={false} allowUpload={false} open={this.state.layerModalOpen} onRequestClose={this.closeAddLayerModal.bind(this)} sources={[{ url: 'https://geo.datos.gob.mx/geoserver/wms', type: 'WMS', title: 'Datos MX QA' }]} /> */}
         <div>
-          <MapaAppBar mapa={map}/>
+          {/* <MapaAppBar mapa={map}/> */}
           <div className="App">
             <MapPanel map={map} />
             <LoadingPanel map={map} />
             <div id='left-control-buttons'>
               <div id='control-button'><FloatingActionButton mini={true} onClick={this.openAddLayerModal.bind(this)}><ContentAdd /></FloatingActionButton></div>
-              <div id='control-button'><LayerList allowFiltering={true} showOpacity={true} showDownload={true} showGroupContent={true} showZoomTo={true} allowReordering={true} map={map} /></div>
+              <div id='control-button'><LayerList minWidth={500} showZoomTo={true} allowRemove={true} allowEditing={true} allowFiltering={true} showOpacity={true} showGroupContent={true} showZoomTo={true} allowReordering={true} map={map} /></div>
             </div>
             <div id='right-control-buttons'>
               {/* <div id='control-button'><Globe map={map} /></div> */}
@@ -98,6 +100,8 @@ class App extends Component {
               <div id='control-button'><HomeButton map={map} /></div>
               <div id='control-button'><Zoom map={map} /></div>
               <div id='control-button'><Rotate map={map} /></div>
+              <div id='control-button'> <FloatingActionButton mini={true}><Navigation style={{ 'left': -4, 'top': -2}} toggleGroup='navigation' secondary={true} /></FloatingActionButton></div>
+              <div id='control-button'><FloatingActionButton mini={true}><Measure style={{ 'left': -4, 'top': -2 }} toggleGroup='navigation' map={map} /></FloatingActionButton></div>
             </div>
           </div>
         </div>
