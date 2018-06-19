@@ -1,13 +1,13 @@
 #left-control-buttons{
     position: fixed;
     left: 10px;
-    top: 170px;
+    top: 100px;
 }
 
 #right-control-buttons{
     position: fixed;
-    right: 10px;
-    top: 170px;
+    right: 3px;
+    top: 100px;
 }
 
 
