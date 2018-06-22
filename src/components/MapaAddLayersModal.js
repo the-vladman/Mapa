@@ -68,17 +68,6 @@ class MapaAddLayersModal extends Component {
 
     render() {
         const { error, isLoaded, layers } = this.state;
-        const actions = [
-            <FlatButton
-                label="Cancelar"
-                onClick={this.props.closeModal}
-            />,
-            <RaisedButton
-                label="Agregar Capas"
-                onClick={this.props.closeModal}
-            />,
-        ];
-
         if (error) {
             return <div>Error: {error.message}</div>;
         } else if (!isLoaded) {
