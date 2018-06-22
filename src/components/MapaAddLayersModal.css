@@ -12,12 +12,24 @@
     width: 5%;
 }
 
+.resource-item-info{
+    width: 85%;
+    display: grid;
+}
+
 .resource-item-name{
     margin-left: 10px;
-    width: 85%;
     color: #474747;
     font-size: 10pt;
     font-weight: 600;
+    float: left;
+}
+
+.resource-item-description{
+    margin-top: 5px;
+    margin-left: 10px;
+    color: #474747;
+    font-size: 10pt;
     float: left;
 }
 

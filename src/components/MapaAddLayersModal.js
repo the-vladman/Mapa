@@ -92,18 +92,23 @@ class MapaAddLayersModal extends Component {
                         title='Capas Destacadas'
                     >
                         {layers.map(layer => (
-                                <GridTile key={layer._id} className='resource-item' onClick={this.selectedLayer.bind(this, layer)}>
-                                    <div className='resource-item-icon'><span className="tag-icon tag-desarrollo"></span></div>
-                                    <div className='resource-item-name'>{layer.name_resource ? layer.name_resource : layer.geoserver}</div>
-                                    <div className='resource-item-org'>
-                                        {
-                                            layer.organization ?
-                                            (<strong>
-                                                <a href={ process.env.REACT_APP_CKAN_URL + '/busca/organization/'+ layer.organization.name}>{layer.organization ? layer.organization.title : ''}</a>
-                                            </strong>):
-                                            (<strong></strong>)
-                                        }
-                                    </div>
+                                <GridTile key={layer._id}>
+                                    <div className='resource-item' onClick={this.selectedLayer.bind(this, layer)}>
+                                        <div className='resource-item-icon'><span className="tag-icon tag-desarrollo"></span></div>
+                                        <div className='resource-item-info'>
+                                            <div className='resource-item-name'>{layer.name_resource ? layer.name_resource : layer.geoserver}</div>
+                                            <div className='resource-item-description'>{layer.organization ? layer.organization.description : 'NO TENEMOS DESCRIPCION DE ESTA INSTITUCONNO TENEMOS DESCRIPCION DE ESTA INSTITUCONNO TENEMOS DESCRIPCION DE ESTA INSTITUCONNO TENEMOS DESCRIPCION DE ESTA INSTITUCONNO TENEMOS DESCRIPCION DE ESTA INSTITUCONNO TENEMOS DESCRIPCION DE ESTA INSTITUCON'}</div>
+                                        </div>
+                                        <div className='resource-item-org'>
+                                            {
+                                                layer.organization ?
+                                                (<strong>
+                                                    <a href={ process.env.REACT_APP_CKAN_URL + '/busca/organization/'+ layer.organization.name}>{layer.organization ? layer.organization.title : ''}</a>
+                                                </strong>):
+                                                (<strong></strong>)
+                                            }
+                                        </div>
+                                    </div>    
                                 </GridTile>))
                         }
                     </GridList>
