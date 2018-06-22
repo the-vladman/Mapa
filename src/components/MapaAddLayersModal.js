@@ -95,6 +95,8 @@ class MapaAddLayersModal extends Component {
                         open={this.props.isOpen}
                         onRequestClose={this.props.closeModal}
                         autoScrollBodyContent={true}
+                        contentStyle={{ width: '70%', maxWidth: 'none'}}
+                >
                     
                     <GridList
                         cellHeight='auto'
