@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import Dialog from 'material-ui/Dialog';
-import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
 import './MapaAddLayersModal.css';
 import ol from 'openlayers';
 import LinearProgress from 'material-ui/LinearProgress';
 import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
 import SearchIcon from 'material-ui/svg-icons/action/search';
-
+import { GridList, GridTile } from 'material-ui/GridList';
 
 class MapaAddLayersModal extends Component {
     constructor(props) {
@@ -93,11 +91,13 @@ class MapaAddLayersModal extends Component {
                         open={this.props.isOpen}
                         onRequestClose={this.props.closeModal}
                         autoScrollBodyContent={true}
+                    
+                    <GridList
+                        cellHeight='auto'
+                        title='Capas Destacadas'
                     >
-                        <TextField fullWidth={true} hintText="Buscar" /><IconButton><SearchIcon/></IconButton>
-                    {
-                        layers.map(layer => (
-                                <div key={layer._id} className='resource-item' onClick={this.selectedLayer.bind(this, layer)}>
+                        {layers.map(layer => (
+                                <GridTile key={layer._id} className='resource-item' onClick={this.selectedLayer.bind(this, layer)}>
                                     <div className='resource-item-icon'><span className="tag-icon tag-desarrollo"></span></div>
                                     <div className='resource-item-name'>{layer.name_resource ? layer.name_resource : layer.geoserver}</div>
                                     <div className='resource-item-org'>
@@ -109,8 +109,9 @@ class MapaAddLayersModal extends Component {
                                             (<strong></strong>)
                                         }
                                     </div>
-                                </div>))
-                    }
+                                </GridTile>))
+                        }
+                    </GridList>
                     </Dialog>
                 </div>
             );
