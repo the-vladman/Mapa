@@ -87,7 +87,11 @@ class MapaAddLayersModal extends Component {
             return (
                 <div>
                     <Dialog
-                        title="Agregar Capas"
+                        title={<div id='search-bar'>
+                            <div id='search-text'><h1>Agregar Capas</h1></div>
+                        <div id='search-input'><TextField fullWidth={true} hintText="Buscar" /></div>
+                        <div id='search-button'><IconButton><SearchIcon /></IconButton></div>
+                    </div>}
                         open={this.props.isOpen}
                         onRequestClose={this.props.closeModal}
                         autoScrollBodyContent={true}
