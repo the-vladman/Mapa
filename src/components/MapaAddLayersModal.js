@@ -20,7 +20,7 @@ class MapaAddLayersModal extends Component {
     }
 
     componentWillMount() {
-        fetch(process.env.REACT_APP_API_URL + '/ckan-geoserver' + '?pageSize=500')
+        fetch(process.env.REACT_APP_API_URL + '/ckan-geoserver?organization.title!=INEGI')
             .then(res => res.json())
             .then(
                 (response) => {
