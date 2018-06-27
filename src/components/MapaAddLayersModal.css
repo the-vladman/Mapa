@@ -38,18 +38,3 @@
     width: 10%;
     margin-top: 5px;
 }
-
-#search-text{
-    width: 67%;
-}
-
-#search-input{
-    width: 30%;
-}
-#search-button{
-    width: 3%;
-}
-
-#search-bar{
-    display: flex;
-}

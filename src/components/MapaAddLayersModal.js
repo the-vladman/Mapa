@@ -7,6 +7,7 @@ import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
 import SearchIcon from 'material-ui/svg-icons/action/search';
 import { GridList, GridTile } from 'material-ui/GridList';
+import MapaSearchBar from './MapaSearchBar';
 
 class MapaAddLayersModal extends Component {
     constructor(props) {
@@ -76,11 +77,7 @@ class MapaAddLayersModal extends Component {
             return (
                 <div>
                     <Dialog
-                        title={<div id='search-bar'>
-                            <div id='search-text'><h1>Agregar Capas</h1></div>
-                        <div id='search-input'><TextField fullWidth={true} hintText="Buscar" /></div>
-                        <div id='search-button'><IconButton><SearchIcon /></IconButton></div>
-                    </div>}
+                        title={<MapaSearchBar/>}
                         open={this.props.isOpen}
                         onRequestClose={this.props.closeModal}
                         autoScrollBodyContent={true}
