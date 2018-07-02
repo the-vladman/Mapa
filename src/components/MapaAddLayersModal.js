@@ -5,6 +5,7 @@ import ol from 'openlayers';
 import LinearProgress from 'material-ui/LinearProgress';
 import { GridList, GridTile } from 'material-ui/GridList';
 import MapaSearchBar from './MapaSearchBar';
+import MapaResourceItem from './MapaResourceItem';
 
 class MapaAddLayersModal extends Component {
     constructor(props) {
@@ -129,23 +130,9 @@ class MapaAddLayersModal extends Component {
                     {
                         layers.map(layer => (
                                 <GridTile key={layer._id}>
-                                    <div className='resource-item' onClick={this.selectedLayer.bind(this, layer)}>
-                                        <div className='resource-item-icon'><span className="tag-icon tag-desarrollo"></span></div>
-                                        <div className='resource-item-info'>
-                                            <div className='resource-item-name'>{layer.name_resource ? layer.name_resource : layer.geoserver}</div>
-                                            <div className='resource-item-description'>{layer.description}</div>
-                                        </div>
-                                        <div className='resource-item-org'>
-                                            {
-                                                layer.organization ?
-                                                (<strong>
-                                                    <a href={ process.env.REACT_APP_CKAN_URL + '/busca/organization/'+ layer.organization.name}>{layer.organization ? layer.organization.title : ''}</a>
-                                                </strong>):
-                                                (<strong></strong>)
-                                            }
-                                        </div>
-                                    </div>    
-                                </GridTile>))
+                                    <MapaResourceItem capa={layer}  selected={this.selectedLayer.bind(this, layer)}></MapaResourceItem>
+                                </GridTile>)
+                        )
                     }
                     </GridList>
                     </Dialog>
