@@ -21,6 +21,10 @@ class MapaAddLayersModal extends Component {
     }
 
     componentWillMount() {
+        this.getBestLayers();
+    }
+
+    getBestLayers(){
         fetch(process.env.REACT_APP_API_URL + '/ckan-geoserver?organization.title!=INEGI')
             .then(res => res.json())
             .then(
@@ -36,7 +40,7 @@ class MapaAddLayersModal extends Component {
                 (error) => {
                     this.setState({
                         isLoadedModal: true,
-                        errorModal:error
+                        errorModal: error
                     });
                 }
             );
@@ -44,7 +48,7 @@ class MapaAddLayersModal extends Component {
 
     createLayer(layer){
         var newWmsLayer = new ol.layer.Tile({
-            title: layer.name_resource,
+            title: layer.name_resource ? layer.name_resource : layer.geoserver,
             source: new ol.source.TileWMS({
             url: process.env.REACT_APP_GEOSERVER_URL + '/ows',
             params: {'LAYERS': "ckan:" + layer.geoserver, 'TILED': true},
@@ -59,18 +63,17 @@ class MapaAddLayersModal extends Component {
         const newLayer = this.createLayer(layer);
         this.props.mapa.addLayer(newLayer);
         this.props.closeModal();
+        this.getBestLayers();
     }
 
 
     changeText(event){
-        console.log('es', event.target.value);
         this.setState({
             searchText: event.target.value,
         });
     }
 
     searchLayers(){
-        console.log('LEOS', this.state.searchText);
         this.getLayersSearch(this.state.searchText);
     }
 
@@ -123,7 +126,8 @@ class MapaAddLayersModal extends Component {
                         cellHeight='auto'
                         title='Capas Destacadas'
                     >
-                        {layers.map(layer => (
+                    {
+                        layers.map(layer => (
                                 <GridTile key={layer._id}>
                                     <div className='resource-item' onClick={this.selectedLayer.bind(this, layer)}>
                                         <div className='resource-item-icon'><span className="tag-icon tag-desarrollo"></span></div>
@@ -142,7 +146,7 @@ class MapaAddLayersModal extends Component {
                                         </div>
                                     </div>    
                                 </GridTile>))
-                        }
+                    }
                     </GridList>
                     </Dialog>
                 </div>
