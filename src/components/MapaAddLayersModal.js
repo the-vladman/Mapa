@@ -3,9 +3,6 @@ import Dialog from 'material-ui/Dialog';
 import './MapaAddLayersModal.css';
 import ol from 'openlayers';
 import LinearProgress from 'material-ui/LinearProgress';
-import TextField from 'material-ui/TextField';
-import IconButton from 'material-ui/IconButton';
-import SearchIcon from 'material-ui/svg-icons/action/search';
 import { GridList, GridTile } from 'material-ui/GridList';
 import MapaSearchBar from './MapaSearchBar';
 
@@ -13,10 +10,13 @@ class MapaAddLayersModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoaded: false,
-            error: null,
+            isLoadedModal: false,
+            isLoadedLayers:false,
+            errorModal: null,
+            errorSearch: null,
             layers: [],
-            layersSelected: []
+            layersSelected: [],
+            searchText: '',
         };
     }
 
@@ -26,7 +26,7 @@ class MapaAddLayersModal extends Component {
             .then(
                 (response) => {
                     this.setState({
-                        isLoaded: true,
+                        isLoadedModal: true,
                         layers: response.results
                     });
                 },
@@ -35,11 +35,11 @@ class MapaAddLayersModal extends Component {
                 // exceptions from actual bugs in components.
                 (error) => {
                     this.setState({
-                        isLoaded: true,
-                        error
+                        isLoadedModal: true,
+                        errorModal:error
                     });
                 }
-            )
+            );
     }
 
     createLayer(layer){
@@ -62,28 +62,63 @@ class MapaAddLayersModal extends Component {
     }
 
 
+    changeText(event){
+        console.log('es', event.target.value);
+        this.setState({
+            searchText: event.target.value,
+        });
+    }
+
+    searchLayers(){
+        console.log('LEOS', this.state.searchText);
+        this.getLayersSearch(this.state.searchText);
+    }
+
+    getLayersSearch(text){
+        fetch(process.env.REACT_APP_API_URL + '/ckan-geoserver?name_resource=/(' + text + ')/i')
+            .then(res => res.json())
+            .then(
+                (response) => {
+                    this.setState({
+                        isLoadedLayers: true,
+                        layers: response.results,
+                        searchText: ''
+                    });
+                },
+                // Note: it's important to handle errors here
+                // instead of a catch() block so that we don't swallow
+                // exceptions from actual bugs in components.
+                (error) => {
+                    this.setState({
+                        isLoadedLayers: true,
+                        errorSearch: error,
+                        searchText: ''
+                    });
+                }
+            );
+    }
+
     addLayers(){
 
     }
 
 
     render() {
-        const { error, isLoaded, layers } = this.state;
-        if (error) {
-            return <div>Error: {error.message}</div>;
-        } else if (!isLoaded) {
+        const { errorModal, isLoadedModal, layers, isLoadedLayers, errorSearch } = this.state;
+        if (errorModal) {
+            return <div>Error: {errorModal.message}</div>;
+        } else if (!isLoadedModal) { 
             return < LinearProgress mode = "indeterminate" />;
         } else {
             return (
                 <div>
                     <Dialog
-                        title={<MapaSearchBar/>}
+                        title={<MapaSearchBar typing={this.changeText.bind(this)} search={this.searchLayers.bind(this)} />}
                         open={this.props.isOpen}
                         onRequestClose={this.props.closeModal}
                         autoScrollBodyContent={true}
-                        contentStyle={{ width: '70%', maxWidth: 'none'}}
+                        contentStyle={{ width: '80%', maxWidth: 'none'}}
                 >
-                    
                     <GridList
                         cellHeight='auto'
                         title='Capas Destacadas'
@@ -94,7 +129,7 @@ class MapaAddLayersModal extends Component {
                                         <div className='resource-item-icon'><span className="tag-icon tag-desarrollo"></span></div>
                                         <div className='resource-item-info'>
                                             <div className='resource-item-name'>{layer.name_resource ? layer.name_resource : layer.geoserver}</div>
-                                            <div className='resource-item-description'>{layer.organization ? layer.organization.description : 'NO TENEMOS DESCRIPCION DE ESTA INSTITUCONNO TENEMOS DESCRIPCION DE ESTA INSTITUCONNO TENEMOS DESCRIPCION DE ESTA INSTITUCONNO TENEMOS DESCRIPCION DE ESTA INSTITUCONNO TENEMOS DESCRIPCION DE ESTA INSTITUCONNO TENEMOS DESCRIPCION DE ESTA INSTITUCON'}</div>
+                                            <div className='resource-item-description'>{layer.description}</div>
                                         </div>
                                         <div className='resource-item-org'>
                                             {

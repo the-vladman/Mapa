@@ -68,15 +68,11 @@ class App extends Component {
   openAddLayerModal(value){
     this.setState({
       layerModalOpen: true
-    }, function () {
-      console.log('abiero');
-  });
+    });
 }
   closeAddLayerModal(value) {
     this.setState({
       layerModalOpen: false
-    }, function () {
-      console.log('cerrado');
     });
   }
 
