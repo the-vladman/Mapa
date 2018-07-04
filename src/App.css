@@ -14,3 +14,9 @@
 #control-button{
     margin-top: 3pt;
 }
+
+#layers-control{
+  position: fixed;
+  top: 180px;
+  left: 50px;
+}

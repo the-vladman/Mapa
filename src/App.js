@@ -20,6 +20,7 @@ import Navigation from '@boundlessgeo/sdk/components/Navigation';
 ///// my Components
 import MapaAppBar from './components/MapaAppBar';
 import MapaAddLayersModal from './components/MapaAddLayersModal';
+import MapaLayersControl from './components/MapaLayersControl';
 ///// my Components
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { injectIntl, intlShape } from 'react-intl';
@@ -90,6 +91,7 @@ class App extends Component {
               <div id='control-button'><FloatingActionButton mini={true} onClick={this.openAddLayerModal.bind(this)}><ContentAdd /></FloatingActionButton></div>
               <div id='control-button'><LayerList minWidth={500} showZoomTo={true} allowRemove={true} allowEditing={true} allowFiltering={true} showOpacity={true} showGroupContent={true} showZoomTo={true} allowReordering={true} map={map} /></div>
             </div>
+            <div id='layers-control'><MapaLayersControl/></div>
             <div id='right-control-buttons'>
               {/* <div id='control-button'><Globe map={map} /></div> */}
               <div id='control-button'><Geolocation map={map} /></div>
