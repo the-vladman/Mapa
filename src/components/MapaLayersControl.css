@@ -1,3 +1,8 @@
 .layers-control-container{
   width: 600px;
 }
+
+#layers-control-text{
+  padding-top: 10px;
+  margin-left: 20px;
+}
