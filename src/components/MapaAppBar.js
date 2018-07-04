@@ -7,6 +7,7 @@ class MapaAppBar extends Component {
     render() {
         return(
             <AppBar
+            style={{ 'z-index': 0, }}
             iconElementLeft={
                 <div>
                     <Navigation toggleGroup='navigation' secondary={true} />
