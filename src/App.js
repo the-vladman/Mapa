@@ -34,7 +34,7 @@ var map = new ol.Map({
   layers: [
     new ol.layer.Group({
       type: 'base-group',
-      title: 'Base Maps',
+      title: 'Mapa Base',
       layers: [
         new ol.layer.Tile({
           type: 'base',
@@ -42,6 +42,10 @@ var map = new ol.Map({
           source: new ol.source.OSM()
         })
       ]
+    }),
+    new ol.layer.Group({
+      title: 'Capa de Datos Abiertos',
+      layers: []
     })
   ],
   controls: [new ol.control.Attribution({ collapsible: false }), new ol.control.ScaleLine()],
@@ -89,7 +93,7 @@ class App extends Component {
             <LoadingPanel map={map} />
             <div id='left-control-buttons'>
               <div id='control-button'><FloatingActionButton mini={true} onClick={this.openAddLayerModal.bind(this)}><ContentAdd /></FloatingActionButton></div>
-              <div id='control-button'><LayerList minWidth={500} showZoomTo={true} allowRemove={true} allowEditing={true} allowFiltering={true} showOpacity={true} showGroupContent={true} showZoomTo={true} allowReordering={true} map={map} /></div>
+              <div id='control-button'><LayerList minWidth={500} allowRemove={true} allowEditing={true} allowFiltering={true} showOpacity={true} showGroupContent={true} showZoomTo={true} allowReordering={true} map={map} /></div>
             </div>
             <div id='layers-control'><MapaLayersControl mapa={map}/></div>
             <div id='right-control-buttons'>
