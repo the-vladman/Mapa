@@ -9,6 +9,7 @@ import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Slider from 'material-ui/Slider';
+import { SliderPicker } from 'react-color';
 
 class MapaLayersControl extends Component {
   constructor(props) {
@@ -36,8 +37,8 @@ class MapaLayersControl extends Component {
         anchorOrigin={{ horizontal: 'left', vertical: 'top' }}
         targetOrigin={{ horizontal: 'left', vertical: 'top' }}
       >
-        <MenuItem leftIcon={<FontIcon className="material-icons">color_lens</FontIcon>} />
-        <MenuItem primaryText={<Slider onChange={this.handleSlider.bind(this, layer)} style={{ width: '150px', height: '10px' }} />} leftIcon={<FontIcon className="material-icons">tonality</FontIcon>} />
+        <MenuItem primaryText={<SliderPicker/>} leftIcon={<FontIcon className="material-icons">color_lens</FontIcon>} />
+        <MenuItem primaryText={<Slider onChange={this.handleSlider.bind(this, layer)} style={{ width: '180px', height: '10px' }} />} leftIcon={<FontIcon className="material-icons">tonality</FontIcon>} />
         <Divider />
         <MenuItem onClick={this.deleteLayer.bind(this,layer)} style={{ color: 'red' }} primaryText="Borrar" />
       </IconMenu>)
