@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './MapaLayersControl.css';
+import ol from 'openlayers';
 import Paper from 'material-ui/Paper';
 import { List, ListItem } from 'material-ui/List';
 import FontIcon from 'material-ui/FontIcon';
@@ -20,7 +21,15 @@ class MapaLayersControl extends Component {
   }
 
   handleSlider(layer, event, value){
-    layer.setOpacity(value)
+    layer.setOpacity(value);
+  }
+
+  handleChangeColor(layer, color, event){
+    const newStyle = new ol.style.Style({
+      fill: new ol.style.Fill({ color: color.hex }),
+      stroke: new ol.style.Stroke({ color: '#000000', width: 1 })
+    });
+    layer.setStyle(newStyle);
   }
 
   deleteLayer(layer){
@@ -30,14 +39,14 @@ class MapaLayersControl extends Component {
     });
   }
 
-  editLayerMenu(layer){  
+  editLayerMenu(layer){
     return (
       <IconMenu
         iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
         anchorOrigin={{ horizontal: 'left', vertical: 'top' }}
         targetOrigin={{ horizontal: 'left', vertical: 'top' }}
       >
-        <MenuItem primaryText={<SliderPicker/>} leftIcon={<FontIcon className="material-icons">color_lens</FontIcon>} />
+        <MenuItem primaryText={<SliderPicker onChange={ this.handleChangeColor.bind(this, layer) } />} leftIcon={<FontIcon className="material-icons">color_lens</FontIcon>} />
         <MenuItem primaryText={<Slider onChange={this.handleSlider.bind(this, layer)} style={{ width: '180px', height: '10px' }} />} leftIcon={<FontIcon className="material-icons">tonality</FontIcon>} />
         <Divider />
         <MenuItem onClick={this.deleteLayer.bind(this,layer)} style={{ color: 'red' }} primaryText="Borrar" />
@@ -56,14 +65,14 @@ class MapaLayersControl extends Component {
       <div className='layers-control-container'>
         <Paper elevation={5}>
             <div id='layers-control-header'>
-              <div><h1 id='layers-control-text'>Capas</h1></div>
+              <h1 id='layers-control-text'>Capas</h1>
             </div>
             <div>
               <List>
                 {
                   layersArray.map((layer, i) => {
                     if(i > 2){
-                      return (<ListItem key={layer.getProperties().id} primaryText={layer.getProperties().title} rightIcon={this.editLayerMenu(layer)} leftIcon={ <FontIcon className="material-icons">layers</FontIcon>} />)
+                      return (<ListItem key={layersArray.indexOf(layer)} primaryText={layer.getProperties().title} rightIcon={this.editLayerMenu(layer)} leftIcon={ <FontIcon className="material-icons">layers</FontIcon>} />)
                     }
                   })
                 }
