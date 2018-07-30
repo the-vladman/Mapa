@@ -17,6 +17,7 @@ import AddLayerModal from '@boundlessgeo/sdk/components/AddLayerModal';
 import LayerList from '@boundlessgeo/sdk/components/LayerList';
 import Measure from '@boundlessgeo/sdk/components/Measure';
 import Navigation from '@boundlessgeo/sdk/components/Navigation';
+import FontIcon from 'material-ui/FontIcon';
 ///// my Components
 import MapaAppBar from './components/MapaAppBar';
 import MapaAddLayersModal from './components/MapaAddLayersModal';
@@ -93,7 +94,7 @@ class App extends Component {
             <LoadingPanel map={map} />
             <div id='left-control-buttons'>
               <div id='control-button'><FloatingActionButton mini={true} onClick={this.openAddLayerModal.bind(this)}><ContentAdd /></FloatingActionButton></div>
-              <div id='control-button'><LayerList minWidth={500} allowRemove={true} allowEditing={true} allowFiltering={true} showOpacity={true} showGroupContent={true} showZoomTo={true} allowReordering={true} map={map} /></div>
+              <div id='control-button'><FloatingActionButton mini={true}><FontIcon className="material-icons">layers</FontIcon></FloatingActionButton></div>
             </div>
             <div id='layers-control'><MapaLayersControl mapa={map}/></div>
             <div id='right-control-buttons'>
