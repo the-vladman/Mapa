@@ -11,9 +11,7 @@ class MapaAddLayersModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoadedModal: false,
       isLoadedLayers: false,
-      errorModal: null,
       errorSearch: null,
       layers: [],
       layersSelected: [],
@@ -27,13 +25,16 @@ class MapaAddLayersModal extends Component {
 
   getBestLayers() {
     fetch(process.env.REACT_APP_API_URL + '/ckan-geoserver?organization.title!=INEGI').then(res => res.json()).then((response) => {
-      this.setState({isLoadedModal: true, layers: response.results});
+      this.setState({isLoadedLayers: true, layers: response.results});
+      this.props.thereIs();
     },
     // Note: it's important to handle errors here
     // instead of a catch() block so that we don't swallow
     // exceptions from actual bugs in components.
     (error) => {
-      this.setState({isLoadedModal: true, errorModal: error});
+      this.setState({isLoadedLayers: true});
+      this.props.thereNo();
+      this.props.thereError(error);
     });
   }
 
@@ -55,15 +56,15 @@ class MapaAddLayersModal extends Component {
         })
       })
     });
-
     return newLayer;
   }
-
+  
   selectedLayer(layer) {
     const newLayer = this.createLayer(layer);
     this.props.mapa.addLayer(newLayer);
     this.props.closeModal();
     this.getBestLayers();
+    this.props.layersOnMap();
   }
 
   changeText(event) {
@@ -89,10 +90,8 @@ class MapaAddLayersModal extends Component {
   addLayers() {}
 
   render() {
-    const {errorModal, isLoadedModal, layers, isLoadedLayers, errorSearch} = this.state;
-    if (errorModal) {
-      return <div>Error: {errorModal.message}</div>;
-    } else if (!isLoadedModal) {
+    const { isLoadedLayers, layers, errorSearch } = this.state;
+    if (!isLoadedLayers) {
       return < LinearProgress mode = "indeterminate" />;
     } else {
       return (<div>

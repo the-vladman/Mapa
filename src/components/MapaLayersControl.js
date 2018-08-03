@@ -34,6 +34,7 @@ class MapaLayersControl extends Component {
 
   deleteLayer(layer){
     this.props.mapa.removeLayer(layer);
+    this.props.layersOnMap();
     this.setState({
       layersArray: this.props.mapa.getLayers().getArray()
     });
@@ -71,7 +72,7 @@ class MapaLayersControl extends Component {
               <List>
                 {
                   layersArray.map((layer, i) => {
-                    if(i > 2){
+                    if(i > 1){
                       return (<ListItem key={layersArray.indexOf(layer)} primaryText={layer.getProperties().title} rightIcon={this.editLayerMenu(layer)} leftIcon={ <FontIcon className="material-icons">layers</FontIcon>} />)
                     }
                   })

@@ -43,10 +43,6 @@ var map = new ol.Map({
           source: new ol.source.OSM()
         })
       ]
-    }),
-    new ol.layer.Group({
-      title: 'Capa de Datos Abiertos',
-      layers: []
     })
   ],
   controls: [new ol.control.Attribution({ collapsible: false }), new ol.control.ScaleLine()],
@@ -61,7 +57,10 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      layerModalOpen: false
+      layerModalOpen: false,
+      isLoadedModal: false,
+      arelayersOnMap: false,
+      errorModal: null,
     };
   }
 
@@ -71,32 +70,64 @@ class App extends Component {
     };
   }
 
-  openAddLayerModal(value){
+  openAddLayerModal(){
     this.setState({
       layerModalOpen: true
     });
 }
-  closeAddLayerModal(value) {
+  closeAddLayerModal() {
     this.setState({
       layerModalOpen: false
+    });
+  }
+
+  getLayersOnMap(){
+    let layersLength = map.getLayers().getLength();
+    console.log('lenfjs', layersLength)
+    if(layersLength > 1){
+      this.setState({
+        arelayersOnMap: true
+      });
+    } else{
+      this.setState({
+        arelayersOnMap: false
+      });
+    }
+    
+  }
+  
+  thereLayersOnModal(){
+    this.setState({
+      isLoadedModal: true
+    });
+  }
+  thereErrorOnModal(error){1
+    this.setState({
+      errorModal: error
+    });
+  }
+  thereNoLayersOnModal() {
+    this.setState({
+      isLoadedModal: false
     });
   }
 
   render() {
     return (
       <div>
-        <MapaAddLayersModal mapa={map} isOpen={this.state.layerModalOpen} closeModal={this.closeAddLayerModal.bind(this)}/>
+        <MapaAddLayersModal mapa={map} isOpen={this.state.layerModalOpen} closeModal={this.closeAddLayerModal.bind(this)} layersOnMap={this.getLayersOnMap.bind(this)} thereIs={this.thereLayersOnModal.bind(this)} thereError={this.thereErrorOnModal.bind(this)} thereNo={this.thereNoLayersOnModal.bind(this)}/>
         {/* <AddLayerModal map={map} allowCreate={false} allowUpload={false} open={this.state.layerModalOpen} onRequestClose={this.closeAddLayerModal.bind(this)} sources={[{ url: 'https://geo.datos.gob.mx/geoserver/wms', type: 'WMS', title: 'Datos MX QA' }]} /> */}
         <div>
           {/* <MapaAppBar mapa={map}/> */}
           <div className="App">
+            {this.state.errorModal ? <p>{this.state.errorModal.message}</p>: null}
             <MapPanel map={map} />
             <LoadingPanel map={map} />
             <div id='left-control-buttons'>
-              <div id='control-button'><FloatingActionButton mini={true} onClick={this.openAddLayerModal.bind(this)}><ContentAdd /></FloatingActionButton></div>
-              <div id='control-button'><FloatingActionButton mini={true}><FontIcon className="material-icons">layers</FontIcon></FloatingActionButton></div>
+              {this.state.isLoadedModal ? <div id='control-button'><FloatingActionButton mini={true} onClick={this.openAddLayerModal.bind(this)}><ContentAdd /></FloatingActionButton></div>: null}
+              {this.state.arelayersOnMap ? <div id='control-button'><FloatingActionButton mini={true}><FontIcon className="material-icons">layers</FontIcon></FloatingActionButton></div>:null}
             </div>
-            <div id='layers-control'><MapaLayersControl mapa={map}/></div>
+            <div id='layers-control'><MapaLayersControl mapa={map} layersOnMap={this.getLayersOnMap.bind(this)}/></div>
             <div id='right-control-buttons'>
               {/* <div id='control-button'><Globe map={map} /></div> */}
               <div id='control-button'><Geolocation map={map} /></div>
