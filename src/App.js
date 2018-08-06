@@ -61,6 +61,7 @@ class App extends Component {
       isLoadedModal: false,
       arelayersOnMap: false,
       errorModal: null,
+      layersOnControl: []
     };
   }
 
@@ -81,7 +82,17 @@ class App extends Component {
     });
   }
 
+   getLayersClean(){
+     this.layersOnControl.forEach((l, i) => {
+      if(!l.getProperties().title){
+        console.log('dsdsd',l)
+        map.removeLayer(l)
+      }
+    });
+  }
+
   getLayersOnMap(){
+    this.getLayersClean()
     let layersLength = map.getLayers().getLength();
     console.log('lenfjs', layersLength)
     if(layersLength > 1){
@@ -115,7 +126,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <MapaAddLayersModal mapa={map} isOpen={this.state.layerModalOpen} closeModal={this.closeAddLayerModal.bind(this)} layersOnMap={this.getLayersOnMap.bind(this)} thereIs={this.thereLayersOnModal.bind(this)} thereError={this.thereErrorOnModal.bind(this)} thereNo={this.thereNoLayersOnModal.bind(this)}/>
+        <MapaAddLayersModal mapa={map} layersOnControl={this.state.layersOnControl} isOpen={this.state.layerModalOpen} closeModal={this.closeAddLayerModal.bind(this)} layersOnMap={this.getLayersOnMap.bind(this)} thereIs={this.thereLayersOnModal.bind(this)} thereError={this.thereErrorOnModal.bind(this)} thereNo={this.thereNoLayersOnModal.bind(this)}/>
         {/* <AddLayerModal map={map} allowCreate={false} allowUpload={false} open={this.state.layerModalOpen} onRequestClose={this.closeAddLayerModal.bind(this)} sources={[{ url: 'https://geo.datos.gob.mx/geoserver/wms', type: 'WMS', title: 'Datos MX QA' }]} /> */}
         <div>
           {/* <MapaAppBar mapa={map}/> */}
@@ -127,7 +138,7 @@ class App extends Component {
               {this.state.isLoadedModal ? <div id='control-button'><FloatingActionButton mini={true} onClick={this.openAddLayerModal.bind(this)}><ContentAdd /></FloatingActionButton></div>: null}
               {this.state.arelayersOnMap ? <div id='control-button'><FloatingActionButton mini={true}><FontIcon className="material-icons">layers</FontIcon></FloatingActionButton></div>:null}
             </div>
-            <div id='layers-control'><MapaLayersControl mapa={map} layersOnMap={this.getLayersOnMap.bind(this)}/></div>
+            <div id='layers-control'><MapaLayersControl mapa={map} layersOnControl={this.state.layersOnControl} layersOnMap={this.getLayersOnMap.bind(this)}/></div>
             <div id='right-control-buttons'>
               {/* <div id='control-button'><Globe map={map} /></div> */}
               <div id='control-button'><Geolocation map={map} /></div>

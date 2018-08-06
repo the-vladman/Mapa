@@ -41,6 +41,7 @@ class MapaLayersControl extends Component {
   }
 
   editLayerMenu(layer){
+    console.log(layer);
     return (
       <IconMenu
         iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}

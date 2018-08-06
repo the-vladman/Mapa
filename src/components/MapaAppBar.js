@@ -11,7 +11,7 @@ class MapaAppBar extends Component {
             iconElementLeft={
                 <div>
                     <Navigation toggleGroup='navigation' secondary={true} />
-                        <Measure toggleGroup='navigation' map={this.props.mapa} />
+                    <Measure toggleGroup='navigation' map={this.props.mapa} />
                 </div>
             }/>
         );
