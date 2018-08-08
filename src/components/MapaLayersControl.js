@@ -15,9 +15,6 @@ import { SliderPicker } from 'react-color';
 class MapaLayersControl extends Component {
   constructor(props) {
         super(props);
-        this.state = {
-            layersArray: []
-        };
   }
 
   handleSlider(layer, event, value){
@@ -35,9 +32,6 @@ class MapaLayersControl extends Component {
   deleteLayer(layer){
     this.props.mapa.removeLayer(layer);
     this.props.layersOnMap();
-    this.setState({
-      layersArray: this.props.mapa.getLayers().getArray()
-    });
   }
 
   editLayerMenu(layer){
@@ -55,14 +49,11 @@ class MapaLayersControl extends Component {
       </IconMenu>)
   }
 
-  componentWillMount() {
-    this.setState({
-      layersArray: this.props.mapa.getLayers().getArray()
-    });
+  componentDidMount() {
   }
 
   render() {
-    const {layersArray} = this.state;
+    let {layersOnControl} = this.props
     return(
       <div className='layers-control-container'>
         <Paper elevation={5}>
@@ -72,9 +63,9 @@ class MapaLayersControl extends Component {
             <div>
               <List>
                 {
-                  layersArray.map((layer, i) => {
-                    if(i > 1){
-                      return (<ListItem key={layersArray.indexOf(layer)} primaryText={layer.getProperties().title} rightIcon={this.editLayerMenu(layer)} leftIcon={ <FontIcon className="material-icons">layers</FontIcon>} />)
+                  layersOnControl.map((layer, i) => {
+                    if(i > 0){
+                      return (<ListItem key={layersOnControl.indexOf(layer)} primaryText={layer.getProperties().title} rightIcon={this.editLayerMenu(layer)} leftIcon={ <FontIcon className="material-icons">layers</FontIcon>} />)
                     }
                   })
                 }
