@@ -57,6 +57,7 @@ class App extends Component {
       layerModalOpen: false,
       isLoadedModal: false,
       arelayersOnMap: false,
+      showLayersControl: false,
       errorModal: null,
       layersOnControl: []
     };
@@ -95,6 +96,7 @@ class App extends Component {
       this.setState({arelayersOnMap: true});
     } else {
       this.setState({arelayersOnMap: false});
+      this.setState({showLayersControl: false});
     }
 
   }
@@ -107,6 +109,10 @@ class App extends Component {
   }
   thereNoLayersOnModal() {
     this.setState({isLoadedModal: false});
+  }
+
+  changeShowLayersControl(){
+    this.setState({ showLayersControl: !this.state.showLayersControl })
   }
 
   render() {
@@ -133,32 +139,26 @@ class App extends Component {
             {
               this.state.arelayersOnMap
                 ? <div id='control-button'>
-                    <FloatingActionButton mini={true}>
+                  <FloatingActionButton mini={true} onClick={this.changeShowLayersControl.bind(this)}>
                       <FontIcon className="material-icons">layers</FontIcon>
                     </FloatingActionButton>
                   </div>
                 : null
             }
           </div>
-          <div id='layers-control'><MapaLayersControl mapa={map} layersOnControl={this.state.layersOnControl} layersOnMap={this.getLayersOnMap.bind(this)}/></div>
+          {
+            this.state.showLayersControl
+            ?  <div id='layers-control'><MapaLayersControl mapa={map} layersOnControl={this.state.layersOnControl} layersOnMap={this.getLayersOnMap.bind(this)}/></div>
+            : null
+          }
           <div id='right-control-buttons'>
             {/* <div id='control-button'><Globe map={map} /></div> */}
             <div id='control-button'><Geolocation map={map}/></div>
             <div id='control-button'><HomeButton map={map}/></div>
             <div id='control-button'><Zoom map={map}/></div>
             <div id='control-button'><Rotate map={map}/></div>
-            <div id='control-button'>
-              <FloatingActionButton mini={true}><Navigation style={{
-        'left' : -4,
-        'top' : -2
-      }} toggleGroup='navigation' secondary={true}/></FloatingActionButton>
-            </div>
-            <div id='control-button'>
-              <FloatingActionButton mini={true}><Measure style={{
-        'left' : -4,
-        'top' : -2
-      }} toggleGroup='navigation' map={map}/></FloatingActionButton>
-            </div>
+            <div id='control-button'><FloatingActionButton mini={true}><Navigation style={{'left' : -4,'top' : -2}} toggleGroup='navigation' secondary={true}/></FloatingActionButton></div>
+            <div id='control-button'><FloatingActionButton mini={true}><Measure style={{'left' : -4,'top' : -2}} toggleGroup='navigation' map={map}/></FloatingActionButton></div>
           </div>
         </div>
       </div>

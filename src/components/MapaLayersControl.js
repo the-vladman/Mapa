@@ -10,15 +10,13 @@ import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Slider from 'material-ui/Slider';
-import { SliderPicker } from 'react-color';
+import { HuePicker } from 'react-color';
 
 class MapaLayersControl extends Component {
-  constructor(props) {
-        super(props);
-  }
 
   handleSlider(layer, event, value){
     layer.setOpacity(value);
+    this.props.layersOnMap();
   }
 
   handleChangeColor(layer, color, event){
@@ -27,6 +25,7 @@ class MapaLayersControl extends Component {
       stroke: new ol.style.Stroke({ color: '#000000', width: 1 })
     });
     layer.setStyle(newStyle);
+    this.props.layersOnMap();
   }
 
   deleteLayer(layer){
@@ -35,15 +34,14 @@ class MapaLayersControl extends Component {
   }
 
   editLayerMenu(layer){
-    console.log(layer);
     return (
       <IconMenu
         iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
         anchorOrigin={{ horizontal: 'left', vertical: 'top' }}
         targetOrigin={{ horizontal: 'left', vertical: 'top' }}
       >
-        <MenuItem primaryText={<SliderPicker onChange={ this.handleChangeColor.bind(this, layer) } />} leftIcon={<FontIcon className="material-icons">color_lens</FontIcon>} />
-        <MenuItem primaryText={<Slider onChange={this.handleSlider.bind(this, layer)} style={{ width: '180px', height: '10px' }} />} leftIcon={<FontIcon className="material-icons">tonality</FontIcon>} />
+        <MenuItem primaryText={<HuePicker color={layer.getStyle().getFill().getColor()} width={180} onChange={ this.handleChangeColor.bind(this, layer) } />} leftIcon={<FontIcon className="material-icons">color_lens</FontIcon>} />
+        <MenuItem primaryText={<Slider value={layer.getOpacity()} onChange={this.handleSlider.bind(this, layer)} style={{ width: '180px', height: '10px' }} />} leftIcon={<FontIcon className="material-icons">tonality</FontIcon>} />
         <Divider />
         <MenuItem onClick={this.deleteLayer.bind(this,layer)} style={{ color: 'red' }} primaryText="Borrar" />
       </IconMenu>)
@@ -65,7 +63,7 @@ class MapaLayersControl extends Component {
                 {
                   layersOnControl.map((layer, i) => {
                     if(i > 0){
-                      return (<ListItem key={layersOnControl.indexOf(layer)} primaryText={layer.getProperties().title} rightIcon={this.editLayerMenu(layer)} leftIcon={ <FontIcon className="material-icons">layers</FontIcon>} />)
+                      return <ListItem key={layersOnControl.indexOf(layer)} primaryText={layer.getProperties().title} rightIcon={this.editLayerMenu(layer)} leftIcon={ <FontIcon className="material-icons">layers</FontIcon>} />
                     }
                   })
                 }
