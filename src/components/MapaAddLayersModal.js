@@ -58,7 +58,7 @@ class MapaAddLayersModal extends Component {
     });
     return newLayer;
   }
-  
+
   selectedLayer(layer) {
     const newLayer = this.createLayer(layer);
     this.props.mapa.addLayer(newLayer);
