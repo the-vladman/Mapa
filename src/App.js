@@ -31,7 +31,7 @@ import {injectIntl, intlShape} from 'react-intl';
 // https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin();
 
-var map = new ol.Map({
+let map = new ol.Map({
   layers: [new ol.layer.Group({
       type: 'base-group',
       title: 'Base',
@@ -75,17 +75,18 @@ class App extends Component {
   }
 
   getLayersClean(layers) {
-    const newLayers = layers
-    layers.forEach((l,i) => {
+    let newLayers = layers
+    layers.forEach((l, i) => {
       if (!l.getProperties().title) {
-        layers.splice(i,1)
+        layers.splice(i, 1)
       }
     });
     return newLayers
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.getLayersOnMap();
+    map.updateSize()
   }
 
   getLayersOnMap() {
@@ -111,58 +112,68 @@ class App extends Component {
     this.setState({isLoadedModal: false});
   }
 
-  changeShowLayersControl(){
-    this.setState({ showLayersControl: !this.state.showLayersControl })
+  changeShowLayersControl() {
+    this.setState({
+      showLayersControl: !this.state.showLayersControl
+    })
   }
 
   render() {
-    return (<div>
-      <MapaAddLayersModal mapa={map} isOpen={this.state.layerModalOpen} closeModal={this.closeAddLayerModal.bind(this)} layersOnMap={this.getLayersOnMap.bind(this)} thereIs={this.thereLayersOnModal.bind(this)} thereError={this.thereErrorOnModal.bind(this)} thereNo={this.thereNoLayersOnModal.bind(this)}/> {/* <AddLayerModal map={map} allowCreate={false} allowUpload={false} open={this.state.layerModalOpen} onRequestClose={this.closeAddLayerModal.bind(this)} sources={[{ url: 'https://geo.datos.gob.mx/geoserver/wms', type: 'WMS', title: 'Datos MX QA' }]} /> */}
-      <div>
+    return (
+      <div className="App">
+        <MapaAddLayersModal mapa={map} isOpen={this.state.layerModalOpen} closeModal={this.closeAddLayerModal.bind(this)} layersOnMap={this.getLayersOnMap.bind(this)} thereIs={this.thereLayersOnModal.bind(this)} thereError={this.thereErrorOnModal.bind(this)} thereNo={this.thereNoLayersOnModal.bind(this)}/> {/* <AddLayerModal map={map} allowCreate={false} allowUpload={false} open={this.state.layerModalOpen} onRequestClose={this.closeAddLayerModal.bind(this)} sources={[{ url: 'https://geo.datos.gob.mx/geoserver/wms', type: 'WMS', title: 'Datos MX QA' }]} /> */}
         {/* <MapaAppBar mapa={map}/> */}
-        <div className="App">
+        {
+          this.state.errorModal
+            ? <p>{this.state.errorModal.message}</p>
+            : null
+        }
+        <MapPanel className='mapa-panel' map={map}/>
+        <LoadingPanel map={map}/>
+        <div id='left-control-buttons'>
           {
-            this.state.errorModal
-              ? <p>{this.state.errorModal.message}</p>
+            this.state.isLoadedModal
+              ? <div id='control-button'>
+                  <FloatingActionButton mini={true} onClick={this.openAddLayerModal.bind(this)}><ContentAdd/></FloatingActionButton>
+                </div>
               : null
           }
-          <MapPanel map={map}/>
-          <LoadingPanel map={map}/>
-          <div id='left-control-buttons'>
-            {
-              this.state.isLoadedModal
-                ? <div id='control-button'>
-                    <FloatingActionButton mini={true} onClick={this.openAddLayerModal.bind(this)}><ContentAdd/></FloatingActionButton>
-                  </div>
-                : null
-            }
-            {
-              this.state.arelayersOnMap
-                ? <div id='control-button'>
-                  <FloatingActionButton mini={true} onClick={this.changeShowLayersControl.bind(this)}>
-                      <FontIcon className="material-icons">layers</FontIcon>
-                    </FloatingActionButton>
-                  </div>
-                : null
-            }
-          </div>
           {
-            this.state.showLayersControl
-            ?  <div id='layers-control'><MapaLayersControl mapa={map} layersOnControl={this.state.layersOnControl} layersOnMap={this.getLayersOnMap.bind(this)}/></div>
-            : null
+            this.state.arelayersOnMap
+              ? <div id='control-button'>
+                  <FloatingActionButton mini={true} onClick={this.changeShowLayersControl.bind(this)}>
+                    <FontIcon className="material-icons">layers</FontIcon>
+                  </FloatingActionButton>
+                </div>
+              : null
           }
-          <div id='right-control-buttons'>
-            {/* <div id='control-button'><Globe map={map} /></div> */}
-            <div id='control-button'><Geolocation map={map}/></div>
-            <div id='control-button'><HomeButton map={map}/></div>
-            <div id='control-button'><Zoom map={map}/></div>
-            <div id='control-button'><Rotate map={map}/></div>
-            <div id='control-button'><FloatingActionButton mini={true}><Navigation style={{'left' : -4,'top' : -2}} toggleGroup='navigation' secondary={true}/></FloatingActionButton></div>
-            <div id='control-button'><FloatingActionButton mini={true}><Measure style={{'left' : -4,'top' : -2}} toggleGroup='navigation' map={map}/></FloatingActionButton></div>
+        </div>
+        {
+          this.state.showLayersControl
+            ? <div id='layers-control'><MapaLayersControl mapa={map} layersOnControl={this.state.layersOnControl} layersOnMap={this.getLayersOnMap.bind(this)}/></div>
+            : null
+        }
+        <div id='right-control-buttons'>
+          {/* <div id='control-button'><Globe map={map} /></div> */}
+          <div id='control-button'><Geolocation map={map}/></div>
+          <div id='control-button'><HomeButton map={map}/></div>
+          <div id='control-button'><Zoom map={map}/></div>
+          <div id='control-button'><Rotate map={map}/></div>
+          <div id='control-button'>
+            <FloatingActionButton mini={true}><Navigation style={{
+          'left' : -4,
+          'top' : -2
+        }} toggleGroup='navigation' secondary={true}/></FloatingActionButton>
+          </div>
+          <div id='control-button'>
+            <FloatingActionButton mini={true}><Measure style={{
+          'left' : -4,
+          'top' : -2
+        }} toggleGroup='navigation' map={map}/></FloatingActionButton>
           </div>
         </div>
       </div>
-    </div>);
+    );
   }
 }
 
