@@ -19,10 +19,11 @@
     "ol3-cesium": "3.9.4",
     "openlayers": "4.2.0",
     "react": "15.3.2",
+    "react-color": "^2.14.1",
     "react-dom": "15.3.2",
-    "react-tap-event-plugin": "^1.0.0",
     "react-intl": "^2.1.5",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "react-tap-event-plugin": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
