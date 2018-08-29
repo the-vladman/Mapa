@@ -1,0 +1,27 @@
+#left-control-buttons{
+    position: fixed;
+    left: 10px;
+    top: 100px;
+}
+
+#right-control-buttons{
+    position: fixed;
+    right: 3px;
+    top: 100px;
+}
+
+
+#control-button{
+    margin-top: 3pt;
+}
+
+#layers-control{
+  position: fixed;
+  top: 170px;
+  left: 10px;
+}
+
+
+.mapa-panel{
+  height: 1200px;
+}

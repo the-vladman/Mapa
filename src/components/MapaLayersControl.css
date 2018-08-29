@@ -1,0 +1,27 @@
+.layers-control-container{
+  width: 300px;
+}
+
+#layers-control-text{
+  padding-top: 10px;
+  margin-left: 20px;
+}
+
+.show-layer-button{
+  margin: 5% !important;
+  padding: 0% !important;
+}
+
+.layers-control-element{
+  width: 100%;
+  display: flex;
+}
+
+.layers-control-icon {
+  width: 10%;
+  margin-left: -20px;
+}
+.layers-control-title {
+  padding-left:10px;
+  width: 100%
+}
