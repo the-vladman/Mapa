@@ -39,9 +39,8 @@ class MapaAddLayersModal extends Component {
   }
 
   createLayer(layer) {
-    const urlLayer = `${process.env.REACT_APP_GEOSERVER_URL}/ckan/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ckan:${layer.geoserver}&outputFormat=application/json`;
-    console.log(urlLayer);
-    const newLayer = new ol.layer.Vector({
+    let urlLayer = `${process.env.REACT_APP_GEOSERVER_URL}/ckan/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ckan:${layer.geoserver}&outputFormat=application/json`;
+    let newLayer = new ol.layer.Vector({
       title: layer.name_resource
         ? layer.name_resource
         : layer.geoserver,
@@ -60,7 +59,7 @@ class MapaAddLayersModal extends Component {
   }
 
   selectedLayer(layer) {
-    const newLayer = this.createLayer(layer);
+    let newLayer = this.createLayer(layer);
     this.props.mapa.addLayer(newLayer);
     this.props.closeModal();
     this.getBestLayers();
@@ -90,7 +89,7 @@ class MapaAddLayersModal extends Component {
   addLayers() {}
 
   render() {
-    const { isLoadedLayers, layers, errorSearch } = this.state;
+    const { isLoadedLayers, layers} = this.state;
     if (!isLoadedLayers) {
       return < LinearProgress mode = "indeterminate" />;
     } else {

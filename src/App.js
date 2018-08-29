@@ -7,19 +7,15 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import LoadingPanel from '@boundlessgeo/sdk/components/LoadingPanel';
 import MapPanel from '@boundlessgeo/sdk/components/MapPanel';
-import Globe from '@boundlessgeo/sdk/components/Globe';
+import Header from '@boundlessgeo/sdk/components/Header';
 import HomeButton from '@boundlessgeo/sdk/components/HomeButton';
 import Geolocation from '@boundlessgeo/sdk/components/Geolocation';
-import Header from '@boundlessgeo/sdk/components/Header';
 import Zoom from '@boundlessgeo/sdk/components/Zoom';
 import Rotate from '@boundlessgeo/sdk/components/Rotate';
-import AddLayerModal from '@boundlessgeo/sdk/components/AddLayerModal';
-import LayerList from '@boundlessgeo/sdk/components/LayerList';
 import Measure from '@boundlessgeo/sdk/components/Measure';
 import Navigation from '@boundlessgeo/sdk/components/Navigation';
 import FontIcon from 'material-ui/FontIcon';
 ///// my Components
-import MapaAppBar from './components/MapaAppBar';
 import MapaAddLayersModal from './components/MapaAddLayersModal';
 import MapaLayersControl from './components/MapaLayersControl';
 ///// my Components
@@ -121,8 +117,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <MapaAddLayersModal mapa={map} isOpen={this.state.layerModalOpen} closeModal={this.closeAddLayerModal.bind(this)} layersOnMap={this.getLayersOnMap.bind(this)} thereIs={this.thereLayersOnModal.bind(this)} thereError={this.thereErrorOnModal.bind(this)} thereNo={this.thereNoLayersOnModal.bind(this)}/> {/* <AddLayerModal map={map} allowCreate={false} allowUpload={false} open={this.state.layerModalOpen} onRequestClose={this.closeAddLayerModal.bind(this)} sources={[{ url: 'https://geo.datos.gob.mx/geoserver/wms', type: 'WMS', title: 'Datos MX QA' }]} /> */}
-        {/* <MapaAppBar mapa={map}/> */}
+        <MapaAddLayersModal mapa={map} isOpen={this.state.layerModalOpen} closeModal={this.closeAddLayerModal.bind(this)} layersOnMap={this.getLayersOnMap.bind(this)} thereIs={this.thereLayersOnModal.bind(this)} thereError={this.thereErrorOnModal.bind(this)} thereNo={this.thereNoLayersOnModal.bind(this)}/>
+        {/* <AddLayerModal map={map} allowCreate={false} allowUpload={false} open={this.state.layerModalOpen} onRequestClose={this.closeAddLayerModal.bind(this)} sources={[{ url: 'https://geo.datos.gob.mx/geoserver/wms', type: 'WMS', title: 'Datos MX QA' }]} /> */}
         {
           this.state.errorModal
             ? <p>{this.state.errorModal.message}</p>
@@ -154,7 +150,6 @@ class App extends Component {
             : null
         }
         <div id='right-control-buttons'>
-          {/* <div id='control-button'><Globe map={map} /></div> */}
           <div id='control-button'><Geolocation map={map}/></div>
           <div id='control-button'><HomeButton map={map}/></div>
           <div id='control-button'><Zoom map={map}/></div>
