@@ -24,7 +24,9 @@ class MapaAddLayersModal extends Component {
   }
 
   getBestLayers() {
-    fetch(process.env.REACT_APP_API_URL + '/ckan-geoserver?organization.title!=INEGI').then(res => res.json()).then((response) => {
+    fetch(process.env.REACT_APP_API_URL + '/ckan-geoserver?organization.title!=INEGI')
+    .then(res => res.json())
+    .then((response) => {
       this.setState({isLoadedLayers: true, layers: response.results});
       this.props.thereIs();
     },
@@ -38,6 +40,16 @@ class MapaAddLayersModal extends Component {
     });
   }
 
+  setStyle(layer){
+    console.log(layer.type);
+    return new ol.style.Style({
+      fill: new ol.style.Fill({ color: '#00CC99' }),
+      stroke: new ol.style.Stroke({
+        color: '#000000', width: 1
+      })
+    })
+  }
+
   createLayer(layer) {
     let urlLayer = `${process.env.REACT_APP_GEOSERVER_URL}/ckan/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ckan:${layer.geoserver}&outputFormat=application/json`;
     let newLayer = new ol.layer.Vector({
@@ -48,12 +60,8 @@ class MapaAddLayersModal extends Component {
         url: urlLayer,
         format: new ol.format.GeoJSON()
       }),
-      style: new ol.style.Style({
-        fill: new ol.style.Fill({ color: '#00CC99' }),
-        stroke: new ol.style.Stroke({
-          color: '#000000', width: 1
-        })
-      })
+      layerType: layer.type,
+      style: this.setStyle(layer),
     });
     return newLayer;
   }
