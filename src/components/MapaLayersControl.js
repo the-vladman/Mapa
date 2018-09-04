@@ -78,7 +78,7 @@ class MapaLayersControl extends Component {
               <List>
                 {
                   layersOnControl.map((layer, i) => {
-                  return (i > 0) ? <ListItem key={layersOnControl.indexOf(layer)} primaryText={this.layerControlElement(layer)} leftIcon={<IconButton className='show-layer-button' onClick={this.showLayer.bind(this, layer)}>{layer.getVisible() ? <VisibilityIcon /> : <VisibilityOffIcon />}</IconButton>} rightIcon={this.editLayerMenu(layer)} /> : null
+                  return (i > 1) ? <ListItem key={layersOnControl.indexOf(layer)} primaryText={this.layerControlElement(layer)} leftIcon={<IconButton className='show-layer-button' onClick={this.showLayer.bind(this, layer)}>{layer.getVisible() ? <VisibilityIcon /> : <VisibilityOffIcon />}</IconButton>} rightIcon={this.editLayerMenu(layer)} /> : null
                   })
                 }
               </List>

@@ -70,26 +70,15 @@ class App extends Component {
     this.setState({layerModalOpen: false});
   }
 
-  getLayersClean(layers) {
-    let newLayers = layers
-    layers.forEach((l, i) => {
-      if (!l.getProperties().title) {
-        layers.splice(i, 1)
-      }
-    });
-    return newLayers
-  }
-
   componentDidMount() {
     this.getLayersOnMap();
-    map.updateSize()
   }
 
   getLayersOnMap() {
-    let layersOnControl = this.getLayersClean(map.getLayers().getArray());
+    let layersOnControl = map.getLayers().getArray();
     this.setState({layersOnControl})
     let layersLength = layersOnControl.length;
-    if (layersLength > 1) {
+    if (layersLength > 2) {
       this.setState({arelayersOnMap: true});
     } else {
       this.setState({arelayersOnMap: false});
