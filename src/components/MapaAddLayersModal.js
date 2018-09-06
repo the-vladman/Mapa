@@ -41,13 +41,25 @@ class MapaAddLayersModal extends Component {
   }
 
   setStyle(layer){
-    console.log(layer.type);
-    return new ol.style.Style({
-      fill: new ol.style.Fill({ color: '#00CC99' }),
-      stroke: new ol.style.Stroke({
-        color: '#000000', width: 1
-      })
-    })
+    let initialColor = '#00CC99';
+    let initialStyle = new ol.style.Style();
+    switch (layer.type) {
+      case 'point':
+        let initialPoint = new ol.style.Circle({
+          radius: 3,
+          fill: new ol.style.Fill({ color: initialColor }),
+          stroke: new ol.style.Stroke({ color: '#000000', width: 1 })
+        })
+        initialStyle.setImage(initialPoint)
+        break;
+      case 'line':
+        initialStyle.setStroke(new ol.style.Stroke({ color: initialColor, width: 1 }))
+        break;
+      default:
+        initialStyle.setFill(new ol.style.Fill({ color: initialColor }))
+        initialStyle.setStroke(new ol.style.Stroke({ color: '#000000', width: 1 }))
+    }
+    return initialStyle;
   }
 
   createLayer(layer) {

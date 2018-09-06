@@ -23,11 +23,44 @@ class MapaLayersControl extends Component {
     this.props.layersOnMap();
   }
 
+  getLayerColor(layer){
+    let layerColor = '';
+    switch (layer.getProperties().layerType) {
+      case 'point':
+        layerColor = layer.getStyle().getImage().getFill().getColor();
+        break;
+      case 'line':
+        layerColor = layer.getStyle().getStroke().getColor();
+        break;
+      default:
+        layerColor = layer.getStyle().getFill().getColor();
+    }
+    return layerColor;
+  }
+
+  setNewStyle(type, newColor){
+    let newStyle = new ol.style.Style();
+    switch (type) {
+      case 'point':
+        let initialPoint = new ol.style.Circle({
+          radius: 4,
+          fill: new ol.style.Fill({ color: newColor }),
+          stroke: new ol.style.Stroke({ color: '#000000', width: 1 })
+        })
+        newStyle.setImage(initialPoint)
+        break;
+      case 'line':
+        newStyle.setStroke(new ol.style.Stroke({ color: newColor, width: 1 }))
+        break;
+      default:
+        newStyle.setFill(new ol.style.Fill({ color: newColor }))
+        newStyle.setStroke(new ol.style.Stroke({ color: '#000000', width: 1 }))
+    }
+    return newStyle;
+  }
+
   handleChangeColor(layer, color, event){
-    const newStyle = new ol.style.Style({
-      fill: new ol.style.Fill({ color: color.hex }),
-      stroke: new ol.style.Stroke({ color: '#000000', width: 1 })
-    });
+    let newStyle = this.setNewStyle(layer.getProperties().layerType, color.hex);
     layer.setStyle(newStyle);
     this.props.layersOnMap();
   }
@@ -44,7 +77,7 @@ class MapaLayersControl extends Component {
         anchorOrigin={{ horizontal: 'left', vertical: 'top' }}
         targetOrigin={{ horizontal: 'left', vertical: 'top' }}
       >
-        <MenuItem primaryText={<HuePicker color={layer.getStyle().getFill().getColor()} width={180} onChange={ this.handleChangeColor.bind(this, layer) } />} leftIcon={<ColorLensIcon />} />
+        <MenuItem primaryText={<HuePicker color={this.getLayerColor(layer)} width={180} onChange={ this.handleChangeColor.bind(this, layer) } />} leftIcon={<ColorLensIcon />} />
         <MenuItem primaryText={<Slider value={layer.getOpacity()} onChange={this.handleSlider.bind(this, layer)} style={{ width: '180px', height: '10px' }} />} leftIcon={<TonalityIcon />} />
         <Divider />
         <MenuItem onClick={this.deleteLayer.bind(this,layer)} style={{ color: 'red' }} primaryText="Borrar" />
