@@ -6,7 +6,7 @@ class MapaResourceItem extends Component {
         const layer = this.props.capa;
         return (
             <div className='resource-item' onClick={this.props.selected}>
-                <div className='resource-item-icon'><span className="tag-icon tag-desarrollo"></span></div>
+                <div className='resource-item-icon'><span className="tag-icon tag-geoespacial"></span></div>
                 <div className='resource-item-info'>
                     <div className='resource-item-name'>{layer.name_resource ? layer.name_resource : layer.geoserver}</div>
                     <div className='resource-item-description'>{layer.description}</div>

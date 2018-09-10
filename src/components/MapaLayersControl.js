@@ -12,6 +12,7 @@ import ColorLensIcon from 'material-ui/svg-icons/image/color-lens';
 import TonalityIcon from 'material-ui/svg-icons/image/tonality';
 import VisibilityIcon from 'material-ui/svg-icons/action/visibility';
 import VisibilityOffIcon from 'material-ui/svg-icons/action/visibility-off';
+import ZoomInIcon from 'material-ui/svg-icons/device/location-searching';
 import LayersIcon from 'material-ui/svg-icons/maps/layers';
 import Slider from 'material-ui/Slider';
 import { HuePicker } from 'react-color';
@@ -90,11 +91,25 @@ class MapaLayersControl extends Component {
     this.props.layersOnMap();
   }
 
+  zoomToLayer(layer) {
+    let extent = layer.getSource().getExtent();
+    this.props.mapa.getView().fit(extent, this.props.mapa.getSize());
+  }
+
   layerControlElement(layer){
     return(
-      <div className='layers-control-element'>
-        <LayersIcon className='layers-control-icon' />
+      <div className='layers-control-element'> 
         <p className='layers-control-title'>{layer.getProperties().title}</p>
+      </div>
+    )
+  }
+
+  layerControlButtons(layer){
+    return(
+      <div className='layers-control-buttons'>
+        <IconButton className='layer-button'><LayersIcon /></IconButton>
+        <IconButton className='show-layer-button' onClick={this.showLayer.bind(this, layer)}>{layer.getVisible() ? <VisibilityIcon /> : <VisibilityOffIcon />}</IconButton>
+        <IconButton className='zoom-to-layer-button' onClick={this.zoomToLayer.bind(this, layer)}><ZoomInIcon /></IconButton>
       </div>
     )
   }
@@ -111,7 +126,7 @@ class MapaLayersControl extends Component {
               <List>
                 {
                   layersOnControl.map((layer, i) => {
-                  return (i > 1) ? <ListItem key={layersOnControl.indexOf(layer)} primaryText={this.layerControlElement(layer)} leftIcon={<IconButton className='show-layer-button' onClick={this.showLayer.bind(this, layer)}>{layer.getVisible() ? <VisibilityIcon /> : <VisibilityOffIcon />}</IconButton>} rightIcon={this.editLayerMenu(layer)} /> : null
+                  return (i > 1) ? <ListItem key={layersOnControl.indexOf(layer)} primaryText={this.layerControlElement(layer)} leftIcon={this.layerControlButtons(layer)} rightIcon={this.editLayerMenu(layer)} /> : null
                   })
                 }
               </List>

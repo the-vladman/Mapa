@@ -1,5 +1,5 @@
 .layers-control-container{
-  width: 300px;
+  width: 400px;
 }
 
 #layers-control-text{
@@ -8,13 +8,23 @@
 }
 
 .show-layer-button{
-  margin: 5% !important;
+  margin-left: 3px !important;
+  padding: 0% !important;
+}
+
+.zoom-to-layer-button {
+  margin-left: 3px !important;
+  padding: 0% !important;
+}
+
+.layer-button {
+  margin-left: 1px !important;
   padding: 0% !important;
 }
 
 .layers-control-element{
-  width: 100%;
-  display: flex;
+  width: 95%;
+  margin-left: 25px !important;
 }
 
 .layers-control-icon {
@@ -22,6 +32,11 @@
   margin-left: -20px;
 }
 .layers-control-title {
-  padding-left:10px;
+  margin-left:10px !important;
   width: 100%
+}
+
+.layers-control-buttons {
+  display: flex !important;
+
 }

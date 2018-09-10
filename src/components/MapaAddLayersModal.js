@@ -65,7 +65,6 @@ class MapaAddLayersModal extends Component {
   
   getLayerSource(layer){
     let urlLayer = `${process.env.REACT_APP_GEOSERVER_URL}/ckan/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ckan:${layer.geoserver}&outputFormat=application/json`;
-    console.log(urlLayer)
     let geojson = new ol.format.GeoJSON();
     let source = new ol.source.Vector({
       projection: 'EPSG:4326'
@@ -103,7 +102,6 @@ class MapaAddLayersModal extends Component {
   selectedLayer(layer) {
     let newLayer = this.createLayer(layer);
     this.props.mapa.addLayer(newLayer);
-
     this.props.closeModal();
     this.getBestLayers();
     this.props.layersOnMap();
