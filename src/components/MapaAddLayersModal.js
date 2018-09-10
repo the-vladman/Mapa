@@ -62,17 +62,38 @@ class MapaAddLayersModal extends Component {
     return initialStyle;
   }
 
-  createLayer(layer) {
+  
+  getLayerSource(layer){
     let urlLayer = `${process.env.REACT_APP_GEOSERVER_URL}/ckan/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ckan:${layer.geoserver}&outputFormat=application/json`;
+    console.log(urlLayer)
+    let geojson = new ol.format.GeoJSON();
+    let source = new ol.source.Vector({
+      projection: 'EPSG:4326'
+    });
+    fetch(urlLayer)
+    .then(res => res.json())
+    .then((response) => {
+        let features = geojson.readFeatures(response);
+        source.addFeatures(features);
+        let extent = source.getExtent(); 
+        this.props.mapa.getView().fit(extent, this.props.mapa.getSize());
+    },
+    // Note: it's important to handle errors here
+    // instead of a catch() block so that we don't swallow
+    // exceptions from actual bugs in components.
+    (error) => {
+        console.log(error)
+    });
+
+    return source
+  }
+
+  createLayer(layer) {
     let newLayer = new ol.layer.Vector({
       title: layer.name_resource
         ? layer.name_resource
         : layer.geoserver,
-      source: new ol.source.Vector({
-        url: urlLayer,
-        projection: 'EPSG:4326',
-        format: new ol.format.GeoJSON()
-      }),
+      source: this.getLayerSource(layer),
       layerType: layer.type,
       style: this.setStyle(layer),
     });
@@ -82,6 +103,7 @@ class MapaAddLayersModal extends Component {
   selectedLayer(layer) {
     let newLayer = this.createLayer(layer);
     this.props.mapa.addLayer(newLayer);
+
     this.props.closeModal();
     this.getBestLayers();
     this.props.layersOnMap();
