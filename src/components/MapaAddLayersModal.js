@@ -70,6 +70,7 @@ class MapaAddLayersModal extends Component {
         : layer.geoserver,
       source: new ol.source.Vector({
         url: urlLayer,
+        projection: 'EPSG:4326',
         format: new ol.format.GeoJSON()
       }),
       layerType: layer.type,
