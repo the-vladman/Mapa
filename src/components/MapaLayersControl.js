@@ -81,7 +81,7 @@ class MapaLayersControl extends Component {
         <MenuItem primaryText={<HuePicker color={this.getLayerColor(layer)} width={180} onChange={ this.handleChangeColor.bind(this, layer) } />} leftIcon={<ColorLensIcon />} />
         <MenuItem primaryText={<Slider value={layer.getOpacity()} onChange={this.handleSlider.bind(this, layer)} style={{ width: '180px', height: '10px' }} />} leftIcon={<TonalityIcon />} />
         <Divider />
-        <MenuItem onClick={this.deleteLayer.bind(this,layer)} style={{ color: 'red' }} primaryText="Borrar" />
+        <MenuItem onClick={this.deleteLayer.bind(this,layer)} style={{ color: 'red' }} primaryText="Eliminar capa del mapa" />
       </IconMenu>)
   }
 
