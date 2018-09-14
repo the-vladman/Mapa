@@ -63,7 +63,7 @@ class MapaAddLayersModal extends Component {
     return initialStyle;
   }
 
-  
+
   getLayerSource(layer){
     let urlLayer = `${process.env.REACT_APP_GEOSERVER_URL}/ckan/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ckan:${layer.geoserver}&outputFormat=application/json`;
     let geojson = new ol.format.GeoJSON();
@@ -75,8 +75,10 @@ class MapaAddLayersModal extends Component {
     .then((response) => {
         let features = geojson.readFeatures(response);
         source.addFeatures(features);
-        let extent = source.getExtent(); 
-        this.props.mapa.getView().fit(extent, this.props.mapa.getSize());
+        if (this.props.layersToAdd.length < 1) {
+          let extent = source.getExtent();
+          this.props.mapa.getView().fit(extent, this.props.mapa.getSize());
+        }
     },
     // Note: it's important to handle errors here
     // instead of a catch() block so that we don't swallow
