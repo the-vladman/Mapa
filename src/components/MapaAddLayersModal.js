@@ -19,8 +19,9 @@ class MapaAddLayersModal extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getBestLayers();
+    this.addLayers(this.props.layersToAdd);
   }
 
   getBestLayers() {
