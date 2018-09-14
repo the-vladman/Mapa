@@ -21,13 +21,14 @@ import MapaLayersControl from './components/MapaLayersControl';
 ///// my Components
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import {injectIntl, intlShape} from 'react-intl';
+import queryString from 'query-string';
 // Needed for onTouchTap
 // Can go away when react 1.0 release
 // Check this repo:
 // https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin();
 
-let map = new ol.Map({
+const map = new ol.Map({
   layers: [new ol.layer.Group({
       type: 'base-group',
       title: 'Base',
@@ -55,7 +56,8 @@ class App extends Component {
       arelayersOnMap: false,
       showLayersControl: false,
       errorModal: null,
-      layersOnControl: []
+      layersOnControl: [],
+      configLayers: []
     };
   }
 
@@ -70,8 +72,16 @@ class App extends Component {
     this.setState({layerModalOpen: false});
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.getLayersOnMap();
+    let values = queryString.parse(this.props.location.search);
+    if(values.config){
+      if(values.config.includes("[") && values.config.includes("]")){
+        this.setState({configLayers: values.config.replace(/[\]\[]/g, "").split(',') });
+      } else{
+        console.log('url invalida');
+      }
+    }
   }
 
   getLayersOnMap() {
@@ -106,7 +116,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <MapaAddLayersModal mapa={map} isOpen={this.state.layerModalOpen} closeModal={this.closeAddLayerModal.bind(this)} layersOnMap={this.getLayersOnMap.bind(this)} thereIs={this.thereLayersOnModal.bind(this)} thereError={this.thereErrorOnModal.bind(this)} thereNo={this.thereNoLayersOnModal.bind(this)}/>
+        <MapaAddLayersModal mapa={map} layersToAdd={this.state.configLayers} isOpen={this.state.layerModalOpen} closeModal={this.closeAddLayerModal.bind(this)} layersOnMap={this.getLayersOnMap.bind(this)} thereIs={this.thereLayersOnModal.bind(this)} thereError={this.thereErrorOnModal.bind(this)} thereNo={this.thereNoLayersOnModal.bind(this)}/>
         {/* <AddLayerModal map={map} allowCreate={false} allowUpload={false} open={this.state.layerModalOpen} onRequestClose={this.closeAddLayerModal.bind(this)} sources={[{ url: 'https://geo.datos.gob.mx/geoserver/wms', type: 'WMS', title: 'Datos MX QA' }]} /> */}
         {
           this.state.errorModal
