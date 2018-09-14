@@ -28,5 +28,8 @@
 
 
 .mapa-panel{
-  height: 1200px;
+}
+
+#footer{
+  bottom: inherit;
 }
