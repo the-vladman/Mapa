@@ -21,13 +21,14 @@ import MapaLayersControl from './components/MapaLayersControl';
 ///// my Components
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import {injectIntl, intlShape} from 'react-intl';
+import queryString from 'query-string';
 // Needed for onTouchTap
 // Can go away when react 1.0 release
 // Check this repo:
 // https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin();
 
-let map = new ol.Map({
+const map = new ol.Map({
   layers: [new ol.layer.Group({
       type: 'base-group',
       title: 'Base',
@@ -55,7 +56,8 @@ class App extends Component {
       arelayersOnMap: false,
       showLayersControl: false,
       errorModal: null,
-      layersOnControl: []
+      layersOnControl: [],
+      configLayers: []
     };
   }
 
@@ -70,8 +72,16 @@ class App extends Component {
     this.setState({layerModalOpen: false});
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.getLayersOnMap();
+    let values = queryString.parse(this.props.location.search);
+    if(values.config){
+      if(values.config.includes("[") && values.config.includes("]")){
+        this.setState({configLayers: values.config.replace(/[\]\[]/g, "").split(',') });
+      } else{
+        console.log('url invalida');
+      }
+    }
   }
 
   getLayersOnMap() {
