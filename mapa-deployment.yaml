@@ -14,9 +14,9 @@ spec:
     spec:
       containers:
         - name: mapa-front
-          image: vladman/mapa:v0.0.1
+          image: vladman/mapa:v1
           ports:
-            - containerPort: 3000
+            - containerPort: 80
           env:
             - name: GEOSERVER_URL
               value: "https://geo.datos.gob.mx/geoserver/wms"
