@@ -69,6 +69,7 @@ class MapaLayersControl extends Component {
   deleteLayer(layer){
     this.props.mapa.removeLayer(layer);
     this.props.layersOnMap();
+    this.props.checkAddLayer();
   }
 
   editLayerMenu(layer){
@@ -98,7 +99,7 @@ class MapaLayersControl extends Component {
 
   layerControlElement(layer){
     return(
-      <div className='layers-control-element'> 
+      <div className='layers-control-element'>
         <p className='layers-control-title'>{layer.getProperties().title}</p>
       </div>
     )
