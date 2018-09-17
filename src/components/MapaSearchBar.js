@@ -10,7 +10,12 @@ class MapaSearchBar extends Component {
             <div id='search-bar'>
                 <div id='search-text'><h1>Agregar Capas</h1></div>
                 <div id='search-complex'>
-                    <div id='search-input'><TextField fullWidth={true} hintText="Buscar" onChange={this.props.typing}/></div>
+                    <div id='search-input'><TextField onKeyPress={(ev) => {
+                        if (ev.key === 'Enter') {
+                            ev.preventDefault();
+                            this.props.search();
+                        }
+                    }} fullWidth={true} hintText="Buscar capas." onChange={this.props.typing}/></div>
                     <div id='search-button'><IconButton onClick={this.props.search} ><SearchIcon /></IconButton></div>
                 </div>
             </div>
