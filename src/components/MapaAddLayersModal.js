@@ -25,7 +25,7 @@ class MapaAddLayersModal extends Component {
   }
 
   getBestLayers() {
-    fetch(process.env.REACT_APP_API_URL + '/ckan-geoserver?organization.title!=INEGI')
+    fetch(process.env.REACT_APP_API_URL + '/ckan-geoserver?organization.title!=INEGI&name_resource')
     .then(res => res.json())
     .then((response) => {
       this.setState({isLoadedLayers: true, layers: response.results});
@@ -119,7 +119,9 @@ class MapaAddLayersModal extends Component {
   }
 
   getLayersSearch(text) {
-    fetch(process.env.REACT_APP_API_URL + '/ckan-geoserver?name_resource=/(' + text + ')/i').then(res => res.json()).then((response) => {
+    fetch(process.env.REACT_APP_API_URL + '/ckan-geoserver?name_resource=/(' + text + ')/i')
+    .then(res => res.json())
+    .then((response) => {
       this.setState({isLoadedLayers: true, layers: response.results, searchText: ''});
     },
     // Note: it's important to handle errors here
@@ -156,7 +158,8 @@ class MapaAddLayersModal extends Component {
       return < LinearProgress mode = "indeterminate" />;
     } else {
       return (<div>
-        <Dialog title={<MapaSearchBar typing = {
+        <Dialog title={
+          <MapaSearchBar typing = {
             this.changeText.bind(this)
           }
           search = {
