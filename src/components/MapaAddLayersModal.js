@@ -18,10 +18,11 @@ class MapaAddLayersModal extends Component {
       searchText: ''
     };
   }
-
+  componentWillMount() {
+    this.addLayers(this.props.layersToAdd);
+  }
   componentDidMount() {
     this.getBestLayers();
-    this.addLayers(this.props.layersToAdd);
   }
 
   getBestLayers() {
