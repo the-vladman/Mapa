@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import './MapaPopUp.css';
 import ol from 'openlayers';
+import {
+    Table,
+    TableBody,
+    TableHeader,
+    TableHeaderColumn,
+    TableRow,
+    TableRowColumn,
+} from 'material-ui/Table';
 
 class MapaPopUp extends Component {
     constructor(props) {
@@ -15,6 +24,7 @@ class MapaPopUp extends Component {
     getDictionary = (dict) => {
         if(dict){
             let arrayDict = Object.entries(dict)
+            console.log(arrayDict)
             this.setState({ propertiesPopUp: arrayDict })
         }
     };
@@ -45,23 +55,34 @@ class MapaPopUp extends Component {
     }
 
     propertyElement = (property) => {
+        console.log(property)
         return(
-            <div key={property[0]}>
-                <b>{property[0]}</b>
-                <p>{property[1]}</p>
-            </div>)
+            <TableRow key={property[0]}>
+                <TableRowColumn className='row-column'>{property[0]}</TableRowColumn>
+                <TableRowColumn className='row-column'>{property[1]}</TableRowColumn>
+            </TableRow>)
     }
-    
+
     render() {
         const { propertiesPopUp } = this.state;
         return(
         <div id="mapapopup" className="ol-popup">
           <div id="popup-content">
-              {
-                  propertiesPopUp.map(property => {
-                      return property[0] !== 'geometry' ? this.propertyElement(property) : null
-                  })
-              }
+              <Table height={300}>
+                  <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                    <TableRow>
+                        <TableHeaderColumn>Parametro</TableHeaderColumn>
+                        <TableHeaderColumn>Valor</TableHeaderColumn>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody displayRowCheckbox={false}>
+                      {
+                        propertiesPopUp.map(property => {
+                         return property[0] !== 'geometry' ? this.propertyElement(property) : null
+                        })
+                      }
+                  </TableBody>
+                </Table>
           </div>
         </div>)
     }

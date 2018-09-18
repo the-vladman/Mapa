@@ -126,7 +126,7 @@ class App extends Component {
             ? <p>{this.state.errorModal.message}</p>
             : null
         }
-        <MapaPopUp mapa={map} />
+        <MapaPopUp mapa={map}/>
         <MapPanel className='mapa-panel' map={map}/>
         <LoadingPanel map={map}/>
         <div id='left-control-buttons'>
