@@ -12,6 +12,13 @@ class MapaPopUp extends Component {
         };
     }
 
+    getDictionary = (dict) => {
+        if(dict){
+            let arrayDict = Object.entries(dict)
+            this.setState({ propertiesPopUp: arrayDict })
+        }
+    };
+
     onMapClick = (evt) =>{
         let coordinates = evt.coordinate;
         let popUp = this.state.popUp;
