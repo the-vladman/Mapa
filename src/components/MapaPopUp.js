@@ -43,6 +43,15 @@ class MapaPopUp extends Component {
         this.setState({ popUp: popUp })
         this.props.mapa.addOverlay(popUp);
     }
+
+    propertyElement = (property) => {
+        return(
+            <div key={property[0]}>
+                <b>{property[0]}</b>
+                <p>{property[1]}</p>
+            </div>)
+    }
+    
     render() {  
         return null;
     }
