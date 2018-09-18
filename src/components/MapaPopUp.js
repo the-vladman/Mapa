@@ -7,7 +7,8 @@ class MapaPopUp extends Component {
         super(props);
         props.mapa.on('singleclick', this.onMapClick);
         this.state = {
-            popupTexts: []
+            propertiesPopUp: [],
+            popUp: null
         };
     }
 
