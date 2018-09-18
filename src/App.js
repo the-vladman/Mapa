@@ -18,6 +18,7 @@ import FontIcon from 'material-ui/FontIcon';
 ///// my Components
 import MapaAddLayersModal from './components/MapaAddLayersModal';
 import MapaLayersControl from './components/MapaLayersControl';
+import MapaPopUp from './components/MapaPopUp';
 ///// my Components
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import {injectIntl, intlShape} from 'react-intl';
@@ -125,6 +126,7 @@ class App extends Component {
             ? <p>{this.state.errorModal.message}</p>
             : null
         }
+        <MapaPopUp mapa={map}/>
         <MapPanel className='mapa-panel' map={map}/>
         <LoadingPanel map={map}/>
         <div id='left-control-buttons'>
