@@ -19,6 +19,15 @@ class MapaPopUp extends Component {
         })
     };
 
+    componentDidMount = () => {
+        const popUpElement = document.getElementById('mapapopup');
+        let popUp = new ol.Overlay({
+            element: popUpElement,
+            autoPan: true,
+        });
+        this.setState({ popUp: popUp })
+        this.props.mapa.addOverlay(popUp);
+    }
     render() {  
         return null;
     }
