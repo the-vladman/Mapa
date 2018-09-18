@@ -108,7 +108,7 @@ class MapaLayersControl extends Component {
   layerControlButtons(layer){
     return(
       <div className='layers-control-buttons'>
-        <IconButton className='layer-button'><LayersIcon /></IconButton>
+        <IconButton className='layer-button'><LayersIcon color={this.getLayerColor(layer)}/></IconButton>
         <IconButton className='show-layer-button' onClick={this.showLayer.bind(this, layer)}>{layer.getVisible() ? <VisibilityIcon /> : <VisibilityOffIcon />}</IconButton>
         <IconButton className='zoom-to-layer-button' onClick={this.zoomToLayer.bind(this, layer)}><ZoomInIcon /></IconButton>
       </div>
