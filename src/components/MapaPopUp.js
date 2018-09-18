@@ -13,10 +13,18 @@ class MapaPopUp extends Component {
     }
 
     onMapClick = (evt) =>{
-        var pixel = this.props.mapa.getEventPixel(evt.originalEvent);
-        this.props.mapa.forEachFeatureAtPixel(pixel, function(feature, layer) {
-            console.log('features', feature.getProperties())
+        let coordinates = evt.coordinate;
+        let popUp = this.state.popUp;
+        let pixel = this.props.mapa.getEventPixel(evt.originalEvent);
+        let featureProperties = this.props.mapa.forEachFeatureAtPixel(pixel, function(feature, layer) {
+            return feature.getProperties();
         })
+        if(featureProperties){
+            this.getDictionary(featureProperties)
+            popUp.setPosition(coordinates)
+        } else {
+            popUp.setPosition()
+        }
     };
 
     componentDidMount = () => {
