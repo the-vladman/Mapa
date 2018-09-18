@@ -73,6 +73,15 @@ class App extends Component {
     this.setState({layerModalOpen: false});
   }
 
+  isEmdebed(){
+    let body = document.getElementById('body');
+    let header = document.getElementById('header');
+    let footer = document.getElementById('footer');
+    body.style.margin = "2px";
+    body.removeChild(header);
+    body.removeChild(footer);
+  }
+
   componentWillMount() {
     this.getLayersOnMap();
     let values = queryString.parse(this.props.location.search);
@@ -82,6 +91,9 @@ class App extends Component {
       } else{
         console.log('url invalida');
       }
+    }
+    if(values.embeded) {
+      this.isEmdebed()
     }
   }
 

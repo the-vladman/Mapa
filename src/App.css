@@ -6,7 +6,7 @@
 
 #right-control-buttons{
     position: fixed;
-    right: 3px;
+    right: 6px;
     top: 100px;
 }
 
@@ -27,9 +27,16 @@
 }
 
 
-.mapa-panel{
-}
+/* .mapa-panel{
+  width: 100% !important;
+  height: 100% !important;
+} */
 
 #footer{
   bottom: inherit;
+}
+
+body {
+  position: relative !important;
+  padding-top: 0px !important;
 }
