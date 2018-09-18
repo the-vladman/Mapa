@@ -52,8 +52,18 @@ class MapaPopUp extends Component {
             </div>)
     }
     
-    render() {  
-        return null;
+    render() {
+        const { propertiesPopUp } = this.state;
+        return(
+        <div id="mapapopup" className="ol-popup">
+          <div id="popup-content">
+              {
+                  propertiesPopUp.map(property => {
+                      return property[0] !== 'geometry' ? this.propertyElement(property) : null
+                  })
+              }
+          </div>
+        </div>)
     }
 }
 
