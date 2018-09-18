@@ -17,14 +17,14 @@ class MapaPopUp extends Component {
         props.mapa.on('singleclick', this.onMapClick);
         this.state = {
             propertiesPopUp: [],
-            popUp: null
+            popUp: null,
+            title: ''
         };
     }
 
     getDictionary = (dict) => {
         if(dict){
             let arrayDict = Object.entries(dict)
-            console.log(arrayDict)
             this.setState({ propertiesPopUp: arrayDict })
         }
     };
@@ -36,6 +36,10 @@ class MapaPopUp extends Component {
         let featureProperties = this.props.mapa.forEachFeatureAtPixel(pixel, function(feature, layer) {
             return feature.getProperties();
         })
+        let layerName = this.props.mapa.forEachFeatureAtPixel(pixel, function (feature, layer) {
+            return layer.getProperties().title;
+        })
+        this.setState({ title: layerName })
         if(featureProperties){
             this.getDictionary(featureProperties)
             popUp.setPosition(coordinates)
@@ -55,7 +59,6 @@ class MapaPopUp extends Component {
     }
 
     propertyElement = (property) => {
-        console.log(property)
         return(
             <TableRow key={property[0]}>
                 <TableRowColumn className='row-column'>{property[0]}</TableRowColumn>
@@ -64,10 +67,11 @@ class MapaPopUp extends Component {
     }
 
     render() {
-        const { propertiesPopUp } = this.state;
+        const { title, propertiesPopUp } = this.state;
         return(
         <div id="mapapopup" className="ol-popup">
           <div id="popup-content">
+              <h5>{title}</h5>
               <Table height={300}>
                   <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                     <TableRow>
