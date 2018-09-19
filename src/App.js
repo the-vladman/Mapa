@@ -80,6 +80,7 @@ class App extends Component {
     body.style.margin = "2px";
     body.removeChild(header);
     body.removeChild(footer);
+    this.changeShowLayersControl();
   }
 
   componentWillMount() {
