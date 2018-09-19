@@ -135,11 +135,13 @@ class MapaAddLayersModal extends Component {
 
   addLayers(layersToAdd) {
     layersToAdd.forEach(layer =>{
-      fetch(process.env.REACT_APP_API_URL + '/ckan-geoserver?geoserver=' + layer)
+      fetch(process.env.REACT_APP_API_URL + '/ckan-geoserver?geoserver=' + layer.idGeo)
       .then(res => res.json())
       .then((response) => {
         if (response.results.length > 0) {
-          let newLayer = this.createLayer(response.results[0]);
+          let layerResponse = response.results[0];
+          layerResponse.color = layer.color;
+          let newLayer = this.createLayer(layerResponse);
           this.props.mapa.addLayer(newLayer);
           this.props.layersOnMap();
         }
