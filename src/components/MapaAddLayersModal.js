@@ -43,22 +43,24 @@ class MapaAddLayersModal extends Component {
   }
 
   setStyle(layer){
+    let configColor = layer.color;
     let initialColor = '#00CC99';
+    let setColor = configColor ? configColor : initialColor;
     let initialStyle = new ol.style.Style();
     switch (layer.type) {
       case 'point':
         let initialPoint = new ol.style.Circle({
           radius: 3,
-          fill: new ol.style.Fill({ color: initialColor }),
+          fill: new ol.style.Fill({ color: setColor }),
           stroke: new ol.style.Stroke({ color: '#000000', width: 1 })
         })
         initialStyle.setImage(initialPoint)
         break;
       case 'line':
-        initialStyle.setStroke(new ol.style.Stroke({ color: initialColor, width: 1 }))
+        initialStyle.setStroke(new ol.style.Stroke({ color: setColor, width: 1 }))
         break;
       default:
-        initialStyle.setFill(new ol.style.Fill({ color: initialColor }))
+        initialStyle.setFill(new ol.style.Fill({ color: setColor }))
         initialStyle.setStroke(new ol.style.Stroke({ color: '#000000', width: 1 }))
     }
     return initialStyle;
