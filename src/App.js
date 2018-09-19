@@ -83,12 +83,34 @@ class App extends Component {
     this.changeShowLayersControl();
   }
 
+  cleanConfig(config){
+    let cleanArray = [];
+    let configArray = config.replace(/[\]\[]/g, "").split(',');
+    configArray.forEach(c =>{
+      let idGeo = '';
+      let hex = '';
+      let color = '';
+      if (c.includes(':')) {
+        let cx = c.split(':');
+        idGeo = cx[0];
+        hex = '#' + cx[1];
+        if (hex.search(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/g) > -1) {
+          color = hex;
+        }
+      } else {
+        idGeo = c;
+      }
+      cleanArray.push({idGeo, color})
+    });
+    this.setState({configLayers: cleanArray});
+  }
+
   componentWillMount() {
     this.getLayersOnMap();
     let values = queryString.parse(this.props.location.search);
     if(values.config){
       if(values.config.includes("[") && values.config.includes("]")){
-        this.setState({configLayers: values.config.replace(/[\]\[]/g, "").split(',') });
+        this.cleanConfig(values.config)
       } else{
         console.log('url invalida');
       }
