@@ -123,7 +123,7 @@ class MapaLayersControl extends Component {
             <div id='layers-control-header'>
               <h1 id='layers-control-text'>Capas</h1>
             </div>
-            <div>
+            <div id='scroll-list' className='layers-control-list'>
               <List>
                 {
                   layersOnControl.map((layer, i) => {

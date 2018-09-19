@@ -27,6 +27,10 @@
   margin-left: 25px !important;
 }
 
+.layers-control-list{
+  overflow: scroll;
+}
+
 .layers-control-icon {
   width: 10%;
   margin-left: -20px;

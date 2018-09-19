@@ -135,12 +135,18 @@ class App extends Component {
   thereLayersOnModal() {
     let layersOnControl = this.state.layersOnControl;
     let blan = false;
+    let scrollList = document.getElementById('scroll-list');
     blan = layersOnControl.length > 6 ? false : true;
     this.setState({isLoadedModal: blan});
+    if (scrollList) {
+      layersOnControl.length > 5 ? scrollList.style.height = '200px' : scrollList.style.height = 'unset';
+    }
   }
+
   thereErrorOnModal(error) {
     this.setState({errorModal: error});
   }
+
   thereNoLayersOnModal() {
     this.setState({isLoadedModal: false});
   }
