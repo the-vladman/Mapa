@@ -27,8 +27,12 @@
   margin-left: 25px !important;
 }
 
-.layers-control-list{
-  overflow: scroll;
+/* .layers-control-list{
+
+} */
+
+.list-item-control{
+  width: 98%;
 }
 
 .layers-control-icon {

@@ -71,6 +71,19 @@ class MapaLayersControl extends Component {
     this.props.layersOnMap();
     this.props.checkAddLayer();
   }
+  componentDidMount() {
+    let layersOnControl = this.props.layersOnControl;
+    let scrollList = document.getElementById('scroll-list');
+    if (scrollList) {
+      if (layersOnControl.length > 5) {
+        scrollList.style.height = '200px';
+        scrollList.style.overflow ='scroll';
+      } else {
+        scrollList.style.height = 'unset';
+        scrollList.style.overflow ='unset';
+      }
+    }
+  }
 
   editLayerMenu(layer){
     return (
@@ -127,7 +140,7 @@ class MapaLayersControl extends Component {
               <List>
                 {
                   layersOnControl.map((layer, i) => {
-                  return (i > 1) ? <ListItem key={layersOnControl.indexOf(layer)} primaryText={this.layerControlElement(layer)} leftIcon={this.layerControlButtons(layer)} rightIcon={this.editLayerMenu(layer)} /> : null
+                  return (i > 1) ? <ListItem className='list-item-control' key={layersOnControl.indexOf(layer)} primaryText={this.layerControlElement(layer)} leftIcon={this.layerControlButtons(layer)} rightIcon={this.editLayerMenu(layer)} /> : null
                   })
                 }
               </List>

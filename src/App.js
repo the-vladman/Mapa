@@ -139,7 +139,13 @@ class App extends Component {
     blan = layersOnControl.length > 6 ? false : true;
     this.setState({isLoadedModal: blan});
     if (scrollList) {
-      layersOnControl.length > 5 ? scrollList.style.height = '200px' : scrollList.style.height = 'unset';
+      if (layersOnControl.length > 5) {
+        scrollList.style.height = '200px'
+        scrollList.style.overflow ='scroll';
+      } else {
+        scrollList.style.height = 'unset';
+        scrollList.style.overflow ='unset';
+      }
     }
   }
 
