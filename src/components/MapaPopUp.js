@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import './MapaPopUp.css';
 import ol from 'openlayers';
 import {
@@ -18,7 +17,7 @@ class MapaPopUp extends Component {
         this.state = {
             propertiesPopUp: [],
             popUp: null,
-            title: ''
+            layer: null
         };
     }
 
@@ -36,10 +35,10 @@ class MapaPopUp extends Component {
         let featureProperties = this.props.mapa.forEachFeatureAtPixel(pixel, function(feature, layer) {
             return feature.getProperties();
         })
-        let layerName = this.props.mapa.forEachFeatureAtPixel(pixel, function (feature, layer) {
-            return layer.getProperties().title;
+        let layerProperties = this.props.mapa.forEachFeatureAtPixel(pixel, function (feature, layer) {
+            return layer.getProperties();
         })
-        this.setState({ title: layerName })
+        this.setState({ layer:layerProperties })
         if(featureProperties){
             this.getDictionary(featureProperties)
             popUp.setPosition(coordinates)
@@ -67,11 +66,11 @@ class MapaPopUp extends Component {
     }
 
     render() {
-        const { title, propertiesPopUp } = this.state;
+        const { layer, propertiesPopUp } = this.state;
         return(
         <div id="mapapopup" className="ol-popup">
           <div id="popup-content">
-              <h5>{title}</h5>
+              <h5>{layer ? layer.title : ''}</h5>
               <Table height={300}>
                   <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                     <TableRow>

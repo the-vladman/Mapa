@@ -100,6 +100,7 @@ class MapaAddLayersModal extends Component {
         : layer.geoserver,
       source: this.getLayerSource(layer),
       layerType: layer.type,
+      ckan: layer.ckan,
       style: this.setStyle(layer),
     });
     return newLayer;
