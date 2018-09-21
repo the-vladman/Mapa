@@ -19,8 +19,9 @@ class MapaAddLayersModal extends Component {
     };
   }
   componentWillMount() {
-    this.addLayers(this.props.layersToAdd);
+    this.getLayersToAdd(this.props.layersToAdd);  
   }
+
   componentDidMount() {
     this.getBestLayers();
   }
@@ -136,26 +137,29 @@ class MapaAddLayersModal extends Component {
     });
   }
 
-  addLayers(layersToAdd) {
-    layersToAdd.forEach(layer =>{
-      fetch(process.env.REACT_APP_API_URL + '/ckan-geoserver?geoserver=' + layer.idGeo)
+  getLayersToAdd(layers) {
+    let layersToSearch = `${process.env.REACT_APP_API_URL}/ckan-geoserver?`;
+    layers.forEach(layer => {
+      layersToSearch += `geoserver=${layer.idGeo}&`;
+    });
+    fetch(layersToSearch)
       .then(res => res.json())
       .then((response) => {
         if (response.results.length > 0) {
-          let layerResponse = response.results[0];
-          layerResponse.color = layer.color;
-          let newLayer = this.createLayer(layerResponse);
-          this.props.mapa.addLayer(newLayer);
-          this.props.layersOnMap();
+          let arrayToAdd = response.results;
+          arrayToAdd.forEach(l => {
+            let layerMetadata = layers.find(e => e.idGeo === l.geoserver);
+            l.color = layerMetadata.color;
+            l.order = layerMetadata.order;
+          });
+          let sortArray = arrayToAdd.sort(function (a, b) { return a.order - b.order });
+          sortArray.map(layerToAdd =>{
+            let newLayer = this.createLayer(layerToAdd);
+            this.props.mapa.addLayer(newLayer);
+            this.props.layersOnMap();
+          });
         }
-      },
-      // Note: it's important to handle errors here
-      // instead of a catch() block so that we don't swallow
-      // exceptions from actual bugs in components.
-      (error) => {
-          console.log(error)
-      });
-    })
+      })
   }
 
   render() {
