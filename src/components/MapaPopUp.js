@@ -33,10 +33,16 @@ class MapaPopUp extends Component {
         let popUp = this.state.popUp;
         let pixel = this.props.mapa.getEventPixel(evt.originalEvent);
         let featureProperties = this.props.mapa.forEachFeatureAtPixel(pixel, function(feature, layer) {
-            return feature.getProperties();
+            if(layer){
+                return feature.getProperties();
+            }
+            return null;
         })
         let layerProperties = this.props.mapa.forEachFeatureAtPixel(pixel, function (feature, layer) {
-            return layer.getProperties();
+            if(layer){
+                return layer.getProperties();
+            }
+            return null;
         })
         this.setState({ layer:layerProperties })
         if(featureProperties){
