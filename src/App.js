@@ -86,10 +86,11 @@ class App extends Component {
   cleanConfig(config){
     let cleanArray = [];
     let configArray = config.replace(/[\]\[]/g, "").split(',');
-    configArray.forEach(c =>{
+    configArray.forEach((c, i)=>{
       let idGeo = '';
       let hex = '';
       let color = '';
+      let order = i;
       if (c.includes(':')) {
         let cx = c.split(':');
         idGeo = cx[0];
@@ -100,7 +101,7 @@ class App extends Component {
       } else {
         idGeo = c;
       }
-      cleanArray.push({idGeo, color})
+      cleanArray.push({order, idGeo, color})
     });
     this.setState({configLayers: cleanArray});
   }
@@ -167,7 +168,6 @@ class App extends Component {
     return (
       <div className="App">
         <MapaAddLayersModal mapa={map} layersToAdd={this.state.configLayers} isOpen={this.state.layerModalOpen} closeModal={this.closeAddLayerModal.bind(this)} layersOnMap={this.getLayersOnMap.bind(this)} thereIs={this.thereLayersOnModal.bind(this)} thereError={this.thereErrorOnModal.bind(this)} thereNo={this.thereNoLayersOnModal.bind(this)}/>
-        {/* <AddLayerModal map={map} allowCreate={false} allowUpload={false} open={this.state.layerModalOpen} onRequestClose={this.closeAddLayerModal.bind(this)} sources={[{ url: 'https://geo.datos.gob.mx/geoserver/wms', type: 'WMS', title: 'Datos MX QA' }]} /> */}
         {
           this.state.errorModal
             ? <p>{this.state.errorModal.message}</p>
