@@ -138,11 +138,12 @@ class MapaAddLayersModal extends Component {
   }
 
   getLayersToAdd(layers) {
-    let layersToSearch = `${process.env.REACT_APP_API_URL}/ckan-geoserver?`;
-    layers.forEach(layer => {
-      layersToSearch += `geoserver=${layer.idGeo}&`;
-    });
-    fetch(layersToSearch)
+    if(layers.length > 0){
+      let layersToSearch = `${process.env.REACT_APP_API_URL}/ckan-geoserver?`;
+      layers.forEach(layer => {
+        layersToSearch += `geoserver=${layer.idGeo}&`;
+      });
+      fetch(layersToSearch)
       .then(res => res.json())
       .then((response) => {
         if (response.results.length > 0) {
@@ -153,13 +154,14 @@ class MapaAddLayersModal extends Component {
             l.order = layerMetadata.order;
           });
           let sortArray = arrayToAdd.sort(function (a, b) { return a.order - b.order });
-          sortArray.map(layerToAdd =>{
+          sortArray.map(layerToAdd => {
             let newLayer = this.createLayer(layerToAdd);
             this.props.mapa.addLayer(newLayer);
             this.props.layersOnMap();
           });
         }
-      })
+      });
+    }
   }
 
   render() {
