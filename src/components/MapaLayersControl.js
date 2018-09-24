@@ -140,7 +140,7 @@ class MapaLayersControl extends Component {
               <List>
                 {
                   layersOnControl.map((layer, i) => {
-                  return (i > 1) ? <ListItem className='list-item-control' key={layersOnControl.indexOf(layer)} primaryText={this.layerControlElement(layer)} leftIcon={this.layerControlButtons(layer)} rightIcon={this.editLayerMenu(layer)} /> : null
+                  return (layer.getProperties().layerType) ? <ListItem className='list-item-control' key={layersOnControl.indexOf(layer)} primaryText={this.layerControlElement(layer)} leftIcon={this.layerControlButtons(layer)} rightIcon={this.editLayerMenu(layer)} /> : null
                   })
                 }
               </List>
