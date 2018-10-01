@@ -17,13 +17,23 @@ class MapaPopUp extends Component {
         this.state = {
             propertiesPopUp: [],
             popUp: null,
-            layer: null
+            layer: null,
+            popUpHeight: 100
         };
     }
 
+    getLengthDictionary(dict){
+        let initHeigth = 100;
+        if(dict.length > 2){
+            initHeigth = 300;
+        }
+        this.setState({ popUpHeight: initHeigth })
+    }
+    
     getDictionary = (dict) => {
         if(dict){
             let arrayDict = Object.entries(dict)
+            this.getLengthDictionary(arrayDict)
             this.setState({ propertiesPopUp: arrayDict })
         }
     };
@@ -72,12 +82,12 @@ class MapaPopUp extends Component {
     }
 
     render() {
-        const { layer, propertiesPopUp } = this.state;
+        const { layer, propertiesPopUp, popUpHeight} = this.state;
         return(
         <div id="mapapopup" className="ol-popup">
           <div id="popup-content">
               <h5>{layer ? layer.title : ''}</h5>
-              <Table height={300}>
+                    <Table height={popUpHeight}>
                   <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                     <TableRow>
                         <TableHeaderColumn>Parametro</TableHeaderColumn>
