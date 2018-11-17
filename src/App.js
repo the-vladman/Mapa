@@ -4,7 +4,6 @@ import ol from 'openlayers';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import CustomTheme from './theme';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
 import LoadingPanel from '@boundlessgeo/sdk/components/LoadingPanel';
 import MapPanel from '@boundlessgeo/sdk/components/MapPanel';
 import Header from '@boundlessgeo/sdk/components/Header';
@@ -14,11 +13,11 @@ import Zoom from '@boundlessgeo/sdk/components/Zoom';
 import Rotate from '@boundlessgeo/sdk/components/Rotate';
 import Measure from '@boundlessgeo/sdk/components/Measure';
 import Navigation from '@boundlessgeo/sdk/components/Navigation';
-import FontIcon from 'material-ui/FontIcon';
 ///// my Components
 import MapaAddLayersModal from './components/MapaAddLayersModal';
 import MapaLayersControl from './components/MapaLayersControl';
 import MapaPopUp from './components/MapaPopUp';
+import MapaControlButton from './components/MapaControlButton';
 ///// my Components
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import {injectIntl, intlShape} from 'react-intl';
@@ -179,18 +178,12 @@ class App extends Component {
         <div id='left-control-buttons'>
           {
             this.state.isLoadedModal
-              ? <div className='control-button'>
-                  <FloatingActionButton mini={true} onClick={this.openAddLayerModal.bind(this)}><ContentAdd/></FloatingActionButton>
-                </div>
+              ? <MapaControlButton icon='add' clickButton={this.openAddLayerModal.bind(this)}></MapaControlButton>
               : null
           }
           {
             this.state.arelayersOnMap
-              ? <div id='layers-control-button' className='control-button'>
-                  <FloatingActionButton mini={true} onClick={this.changeShowLayersControl.bind(this)}>
-                    <FontIcon className="material-icons">layers</FontIcon>
-                  </FloatingActionButton>
-                </div>
+              ? <MapaControlButton id='layers-control-button' icon='layers' clickButton={this.changeShowLayersControl.bind(this)}></MapaControlButton>
               : null
           }
         </div>
